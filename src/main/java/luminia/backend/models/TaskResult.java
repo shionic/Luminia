@@ -24,7 +24,7 @@ public class TaskResult {
     private User user;
     private TaskStatus status;
 
-    enum TaskStatus {
-        UNKNOWN
+    public enum TaskStatus {
+        REJECTED, STARTED, NOT_STARTED, ACCEPT, ABSORBED
     }
 }

@@ -3,6 +3,8 @@ package luminia.backend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity(name = "Task")
 @Table(name = "tasks")
 @Getter
@@ -23,4 +25,6 @@ public class Task {
     @JoinColumn(name = "attachment_id")
     private Attachment attachment;
     private int rank;
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
+    private List<TaskResult> results;
 }

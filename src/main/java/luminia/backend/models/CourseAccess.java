@@ -23,4 +23,9 @@ public class CourseAccess {
     @JoinColumn(name = "user_id")
     private User user;
     private int rank;
+    private CourseAccessStatus status;
+
+    public enum CourseAccessStatus {
+        UNKNOWN, ACCESS, IN_WORK, COMPLETED
+    }
 }

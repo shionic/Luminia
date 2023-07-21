@@ -1,0 +1,44 @@
+package luminia.backend.services;
+
+import lombok.AllArgsConstructor;
+import luminia.backend.models.Course;
+import luminia.backend.models.CourseAccess;
+import luminia.backend.models.User;
+import luminia.backend.repositories.CourseAccessRepository;
+import luminia.backend.repositories.CourseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Service
+@AllArgsConstructor
+public class CourseService {
+    private CourseRepository courseRepository;
+    private CourseAccessRepository courseAccessRepository;
+
+    @Transactional
+    public Optional<Course> findWithFetchAll(Long courseId) {
+        return courseRepository.findWithFetchAll(courseId);
+    }
+
+    @Transactional
+    public Page<CourseAccess> findByUser(User user, Pageable pageable) {
+        return courseAccessRepository.findByUser(user, pageable);
+    }
+
+    @Transactional
+    public Page<CourseAccess> findByUserWithSort(User user, int pageId, int pageSize) {
+        return findByUser(user, PageRequest.of(pageId, pageSize, Sort.by("status")));
+    }
+
+    @Transactional
+    public Optional<Course> findById(Long aLong) {
+        return courseRepository.findById(aLong);
+    }
+}
