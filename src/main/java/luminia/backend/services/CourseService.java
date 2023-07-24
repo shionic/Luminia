@@ -1,6 +1,8 @@
 package luminia.backend.services;
 
 import lombok.AllArgsConstructor;
+import luminia.backend.dto.CourseAccessDto;
+import luminia.backend.dto.CourseDto;
 import luminia.backend.models.Course;
 import luminia.backend.models.CourseAccess;
 import luminia.backend.models.User;
@@ -40,5 +42,13 @@ public class CourseService {
     @Transactional
     public Optional<Course> findById(Long aLong) {
         return courseRepository.findById(aLong);
+    }
+
+    public CourseDto toDto(Course course) {
+        return new CourseDto(course.getId(), course.getName(), course.getDescription());
+    }
+
+    public CourseAccessDto toDto(CourseAccess course) {
+        return new CourseAccessDto(course.getCourse().getId(), course.getCourse().getName(), course.getCourse().getDescription(), course.getRank());
     }
 }

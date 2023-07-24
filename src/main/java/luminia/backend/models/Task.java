@@ -18,6 +18,8 @@ public class Task {
     @SequenceGenerator(name = "tasks_gen", sequenceName = "tasks_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "display_name", unique = true)
+    private String displayName;
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Course parent;
