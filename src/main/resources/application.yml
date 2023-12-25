@@ -1,0 +1,16 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://localhost:7777/
+          jwk-set-uri: https://localhost:7777/.well-known/jwks.json
+server:
+  port: 9864
+logging:
+  level:
+    root: INFO
+    org.apache.tomcat.util.net.NioEndpoint: ERROR
+    sun.rmi: ERROR
+    java.io: ERROR
+    javax.management: ERROR

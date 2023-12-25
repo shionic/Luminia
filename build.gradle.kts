@@ -1,8 +1,8 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.1.1"
-	id("io.spring.dependency-management") version "1.1.0"
-	id("io.freefair.lombok") version "8.1.0"
+	id("org.springframework.boot") version "3.2.1"
+	id("io.spring.dependency-management") version "1.1.4"
+	id("io.freefair.lombok") version "8.4"
 }
 
 group = "luminia"
@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	//implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.postgresql:postgresql")
