@@ -1,6 +1,5 @@
 package luminia.backend.repositories;
 
-import luminia.backend.models.Lecture;
 import luminia.backend.models.Task;
 import luminia.backend.models.TaskResult;
 import luminia.backend.models.User;

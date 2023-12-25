@@ -16,11 +16,19 @@ public class Lecture {
     @SequenceGenerator(name = "lectures_gen", sequenceName = "lectures_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "display_name")
+    private String displayName;
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Course parent;
     @ManyToOne
     @JoinColumn(name = "attachment_id")
     private Attachment attachment;
+    private String url;
     private int rank;
+    private LectureStatus status;
+
+    public enum LectureStatus {
+        UNKNOWN, SKIPPED, VISITED
+    }
 }
