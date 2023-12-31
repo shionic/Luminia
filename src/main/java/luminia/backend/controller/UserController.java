@@ -14,6 +14,6 @@ public class UserController {
     private UserService userService;
     @GetMapping("/current")
     public UserDto getCurrentUser() {
-        return userService.toDto(userService.getUser());
+        return userService.toDto(userService.getUser().getEntity());
     }
 }

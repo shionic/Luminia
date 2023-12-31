@@ -35,6 +35,6 @@ public class CourseController {
             throw new IllegalArgumentException("pageId cannot be less than 0");
         }
         var usr = userService.getUser();
-        return new ListDto<>(courseService.findByUserWithSort(usr, pageId, COURSE_PAGE_SIZE).map(courseService::toDto));
+        return new ListDto<>(courseService.findByUserWithSort(usr.getEntity(), pageId, COURSE_PAGE_SIZE).map(courseService::toDto));
     }
 }

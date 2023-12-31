@@ -1,8 +1,6 @@
 package luminia.backend.configurations;
 
 import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.jwk.Curve;
-import com.nimbusds.jose.jwk.ECKey;
 import com.nimbusds.jose.proc.JWSKeySelector;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jose.proc.SingleKeyJWSKeySelector;
@@ -21,10 +19,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.nio.file.Path;
-import java.security.interfaces.ECPublicKey;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Configuration
 public class LuminiaSecurityConfiguration {
@@ -78,9 +74,6 @@ public class LuminiaSecurityConfiguration {
     public JwtDecoder jwtDecoder(JwtConfigurationProperties properties) throws Exception {
         DefaultJWTProcessor<SecurityContext> processor = new DefaultJWTProcessor<>();
         var publicKey = JwkUtils.readECPublicKey(Path.of(properties.getPublicKeyPath()));
-        ECKey ecKey = new ECKey.Builder(Curve.P_256, publicKey)
-                .keyID(UUID.randomUUID().toString())
-                .build();
         JWSKeySelector<SecurityContext> jwsKeySelector = new SingleKeyJWSKeySelector<>(JWSAlgorithm.ES256, publicKey);
         processor.setJWSKeySelector(jwsKeySelector);
         return new NimbusJwtDecoder(processor);
