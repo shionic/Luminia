@@ -29,4 +29,13 @@ button {
 .button-primary:hover {
     background-color: var(--color-primary-hover);
 }
+
+.button-black {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+.button-black:hover {
+    background-color: var(--color-darker-gray);
+    color: var(--color-white);
+}
 </style>

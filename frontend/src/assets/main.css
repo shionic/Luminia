@@ -15,9 +15,9 @@
 }
 
 .welcome {
-    background-color: var(--color-background);
+    background-color: var(--color-primary-background);
     min-height: 40px;
-    color: var(--color-white);
+    color: var(--color-black);
     padding: 10px;
 }
 
@@ -52,11 +52,38 @@ main {
     width: fit-content;
     color: var(--color-black);
     transition: 0.5s;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.card + .card {
+    margin-top: 20px;
 }
 
 .card:hover {
     color: var(--color-black);
     background-color: var(--color-primary);
+}
+
+.card-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.card-comment {
+    color: var(--color-dark-gray);
+}
+
+.card:hover .card-comment {
+    color: var(--color-darker-gray);
+}
+
+.card-hcontainer {
+    display: flex;
+    align-items: center;
+}
+
+.card-statusbar {
+    display: flex;
+    float: right;
 }

@@ -5,15 +5,26 @@ import TaskCard from '../components/TaskCard.vue'
 <template>
   <div class="welcome">
     <div class="hcenter">
-      Добро пожаловать
+      Добро пожаловать, <span class="welcome-active">Анастасия Евгеньевна</span>
     </div>
     <div class="hcenter">
-      <l-button type="primary">Начать работу</l-button>
+      У вас <span class="welcome-active">2</span> невыполненных заданий
+    </div>
+    <div class="hcenter">
+      <l-button type="black">Начать работу</l-button>
     </div>
   </div>
   <main>
-  <task-card>
-      A
-  </task-card>
+    <h2>Текущие задания</h2>
+    <task-card>
+    </task-card>
+    <task-card>
+    </task-card>
   </main>
 </template>
+<style>
+.welcome-username {
+}
+.welcome-active {
+}
+</style>

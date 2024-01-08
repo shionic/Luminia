@@ -6,6 +6,9 @@ const category = 'Современный дизайн';
 </script>
 <template>
     <div class="card task-card">
+        <div class="card-statusbar">
+            Срочно
+        </div>
         <div class="card-name">
             {{ name }}
         </div>
@@ -20,15 +23,6 @@ const category = 'Современный дизайн';
 <style>
 .task-card {
     cursor: pointer;
-}
-.card-name {
-    font-size: 18px;
-    font-weight: 600;
-}
-.card-comment {
-    color: var(--color-dark-gray);
-}
-.card:hover .card-comment {
-    color: var(--color-darker-gray);
+    min-width: 700px;
 }
 </style>
