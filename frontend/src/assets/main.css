@@ -41,21 +41,22 @@ nav a:hover {
     color: var(--color-primary);
 }
 
-button {
-    border: none;
-    border-radius: 10px;
-    margin: 5px;
+main {
+    padding-left: 10px;
+}
+
+.card {
+    border: var(--color-primary) solid 4px;
+    border-radius: 15px;
     padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.button-primary {
-    background-color: var(--color-primary);
+    width: fit-content;
     color: var(--color-black);
+    transition: 0.5s;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
-.button-primary:hover {
-    background-color: var(--color-primary-hover);
+.card:hover {
+    color: var(--color-black);
+    background-color: var(--color-primary);
 }

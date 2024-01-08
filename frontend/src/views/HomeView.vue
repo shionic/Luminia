@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TaskCard from '../components/TaskCard.vue'
 </script>
 
 <template>
@@ -10,4 +11,9 @@
       <l-button type="primary">Начать работу</l-button>
     </div>
   </div>
+  <main>
+  <task-card>
+      A
+  </task-card>
+  </main>
 </template>
