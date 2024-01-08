@@ -1,0 +1,13 @@
+@import 'normalize.css';
+* {
+    --color-primary: #FF6940;
+    --color-primary-hover: #FF7751;
+    --color-secondary: #FFAC40;
+    --color-secondary-hover: #FFAA31;
+    --color-background: #467D80;
+    --color-primary-background: #40F7FF;
+    --color-primary-background-hover: #46F0FF;
+    --color-secondary-background: #836C4D;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+}

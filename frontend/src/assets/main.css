@@ -1,0 +1,61 @@
+@import './base.css';
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-white);
+    min-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 18px;
+}
+
+.logo {
+    color: var(--color-primary);
+}
+
+.welcome {
+    background-color: var(--color-background);
+    min-height: 40px;
+    color: var(--color-white);
+    padding: 10px;
+}
+
+.hcenter {
+    justify-content: center;
+    text-align: center;
+}
+
+a {
+    transition: 0.2s;
+}
+
+nav a {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: var(--color-black);
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: var(--color-primary);
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.button-primary {
+    background-color: var(--color-primary);
+    color: var(--color-black);
+}
+
+.button-primary:hover {
+    background-color: var(--color-primary-hover);
+}
