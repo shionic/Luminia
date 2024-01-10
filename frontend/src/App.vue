@@ -5,9 +5,10 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <div class="header-wrapper">
-      <div class="logo">Luminia</div>
+      <div class="logo"><RouterLink to="/">Luminia</RouterLink></div>
       <nav>
-        <RouterLink to="/">Главная</RouterLink>
+        <RouterLink to="/courses">Курсы</RouterLink>
+        <RouterLink to="/teachers">Преподаватели</RouterLink>
         <RouterLink to="/about">О проекте</RouterLink>
       </nav>
     </div>
