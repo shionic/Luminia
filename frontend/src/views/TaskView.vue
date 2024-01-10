@@ -35,12 +35,40 @@ const author = "Маргарита Квакова Шулинова";
                 2
             </div>
         </div>
+        <div class="flex hcenter">
+    
+        <div class="upload-container card">
+            <div class="hcenter">
+                <p>
+                    <b>Загрузить отчет ( PDF )</b>
+                </p>
+            </div>
+            <div class="hcenter">
+                <input type="file" id="avatar" name="avatar" accept="application/pdf" />
+            </div>
+            <div class="hcenter">
+                <p>
+                    <b>Загрузить дополнительные файлы ( ZIP )</b>
+                </p>
+            </div>
+            <div class="hcenter">
+                <input type="file" id="avatar" name="avatar" accept="*" />
+            </div>
+            <div class="hcenter">
+                <l-button type="primary">Загрузить решение</l-button>
+            </div>
+            <div class="hcenter">
+                <span class="card-comment">Вы еще не загрузили решение</span>
+            </div>
+        </div>
+        </div>
     </main>
 </template>
 <style>
 .tv-welcome-link {
     color: var(--color-darker-gray);
 }
+
 .tv-welcome-link:hover {
     color: var(--color-dark-gray);
 }
@@ -80,8 +108,16 @@ const author = "Маргарита Квакова Шулинова";
     flex-wrap: wrap;
 
 }
+
 .tv-status {
     display: flex;
     float: right;
+}
+
+.upload-container:hover {
+    background-color: inherit;
+}
+.card:hover .upload-comment {
+    color: inherit !important;
 }
 </style>
