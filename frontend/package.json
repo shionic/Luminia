@@ -11,7 +11,9 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@types/iframe-resizer": "^3.5.13",
     "axios": "^1.6.3",
+    "iframe-resizer": "^4.3.9",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",

@@ -4,13 +4,13 @@ import TaskCard from '../components/TaskCard.vue'
 
 <template>
   <div class="welcome">
-    <div class="hcenter">
+    <div class="hcenter welcome-section">
       Добро пожаловать, <span class="welcome-active">Анастасия Евгеньевна</span>
     </div>
-    <div class="hcenter">
+    <div class="hcenter welcome-section">
       У вас <span class="welcome-active">2</span> невыполненных заданий
     </div>
-    <div class="hcenter">
+    <div class="hcenter welcome-section">
       <l-button type="black">Начать работу</l-button>
     </div>
   </div>

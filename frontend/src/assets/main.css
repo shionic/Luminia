@@ -21,6 +21,10 @@
     padding: 10px;
 }
 
+.welcome-section + .welcome-section {
+    margin-top: 10px;
+}
+
 .hcenter {
     justify-content: center;
     text-align: center;
