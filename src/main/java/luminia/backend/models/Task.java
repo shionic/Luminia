@@ -3,6 +3,8 @@ package luminia.backend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity(name = "Task")
@@ -20,13 +22,25 @@ public class Task {
     private Long id;
     @Column(name = "display_name", unique = true)
     private String displayName;
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private Course parent;
-    @ManyToOne
-    @JoinColumn(name = "attachment_id")
-    private Attachment attachment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "tasks_attachments",
+            joinColumns = @JoinColumn(name = "attachment_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id"))
+    private List<Attachment> attachments;
     private int rank;
     @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
     private List<TaskResult> results;
+    private TaskType task;
+    @Column(name = "deadline_date")
+    private LocalDateTime deadlineDate;
+    @Column(name = "important_date")
+    private LocalDateTime importantDate;
+
+    public enum TaskType {
+        LECTURE, TASK
+    }
 }

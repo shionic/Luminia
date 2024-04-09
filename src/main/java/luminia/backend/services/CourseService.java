@@ -49,6 +49,7 @@ public class CourseService {
     }
 
     public CourseAccessDto toDto(CourseAccess course) {
-        return new CourseAccessDto(course.getCourse().getId(), course.getCourse().getName(), course.getCourse().getDescription(), course.getRank());
+        return new CourseAccessDto(course.getCourse().getId(), course.getCourse().getName(),
+                course.getCourse().getDescription(), course.getRank(), course.getStatus());
     }
 }

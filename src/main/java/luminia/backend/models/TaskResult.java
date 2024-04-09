@@ -3,6 +3,9 @@ package luminia.backend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity(name = "TaskResult")
 @Table(name = "task_results")
 @Getter
@@ -23,6 +26,14 @@ public class TaskResult {
     @JoinColumn(name = "user_id")
     private User user;
     private TaskStatus status;
+    private int rating;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "tasks_result_attachments",
+            joinColumns = @JoinColumn(name = "attachment_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_result_id"))
+    private List<Attachment> attachments;
+    private LocalDateTime uploadDate;
 
     public enum TaskStatus {
         REJECTED, STARTED, NOT_STARTED, ACCEPT, ABSORBED

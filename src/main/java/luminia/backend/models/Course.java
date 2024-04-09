@@ -23,8 +23,6 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private User teacher;
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-    private List<Lecture> lectures;
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Task> tasks;
 }

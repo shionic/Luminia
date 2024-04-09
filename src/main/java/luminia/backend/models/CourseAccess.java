@@ -26,6 +26,6 @@ public class CourseAccess {
     private CourseAccessStatus status;
 
     public enum CourseAccessStatus {
-        UNKNOWN, ACCESS, IN_WORK, COMPLETED
+        UNKNOWN, ACCESS, IN_WORK, COMPLETED, OWNING
     }
 }
