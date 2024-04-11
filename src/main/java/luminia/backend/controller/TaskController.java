@@ -27,6 +27,7 @@ public class TaskController {
     private UserService userService;
     private CourseService courseService;
     private AttachmentService attachmentService;
+    private TaskAssignService assignService;
 
     @GetMapping("/by/course/{courseId}/page/{pageId}")
     public ListDto<TaskDto> findByCourse(@PathVariable Long courseId, @PathVariable int pageId) {
@@ -79,9 +80,17 @@ public class TaskController {
             target = usr.getEntity();
             isTeacher = false;
         }
+        var assign = assignService.findByTaskAndUser(task, target);
+        if(assign.isEmpty()) {
+            if(!isTeacher) {
+                throw new SecurityException("Access denied");
+            } else {
+                throw new IllegalArgumentException("Task not assigned to target user");
+            }
+        }
         List<Attachment> attachments = attachmentService.findAllById(request.attachments);
         TaskResult result = new TaskResult();
-        result.setTask(taskService.getReferenceById(task.getId()));
+        result.setTaskAssign(assign.get());
         result.setAuthor(usr.getEntity());
         result.setTarget(target);
         result.setStatus(isTeacher ? TaskResult.TaskStatus.ACCEPT : TaskResult.TaskStatus.WAIT);

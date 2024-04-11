@@ -13,9 +13,9 @@ import java.util.List;
 @Setter
 public class TaskResultDto {
     private Long id;
-    private Long task_id;
-    private Long target_id;
-    private Long author_id;
+    private TaskAssignDto taskAssign;
+    private UserDto target;
+    private UserDto author;
     private TaskResult.TaskStatus status;
     private int rating;
     private List<AttachmentDto> attachments;

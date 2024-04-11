@@ -31,14 +31,7 @@ public class Task {
             joinColumns = @JoinColumn(name = "attachment_id"),
             inverseJoinColumns = @JoinColumn(name = "task_id"))
     private List<Attachment> attachments;
-    private int rank;
-    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY)
-    private List<TaskResult> results;
     private TaskType task;
-    @Column(name = "deadline_date")
-    private LocalDateTime deadlineDate;
-    @Column(name = "important_date")
-    private LocalDateTime importantDate;
 
     public enum TaskType {
         LECTURE, TASK

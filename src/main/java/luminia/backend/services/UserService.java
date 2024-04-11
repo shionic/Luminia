@@ -8,6 +8,7 @@ import lombok.Setter;
 import luminia.backend.dto.UserDto;
 import luminia.backend.models.User;
 import luminia.backend.repositories.UserRepository;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -43,6 +44,9 @@ public class UserService {
     }
 
     public UserDto toDto(User user) {
+        if(!Hibernate.isInitialized(user)) {
+            return new UserDto(user.getId(), null);
+        }
         return new UserDto(user.getId(), user.getRating());
     }
 

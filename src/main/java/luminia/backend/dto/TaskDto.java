@@ -14,9 +14,6 @@ public class TaskDto {
     private Long id;
     private String displayName;
     private List<AttachmentDto> attachments;
-    private int rank;
     private Task.TaskType task;
-    private LocalDateTime deadlineDate;
-    private LocalDateTime importantDate;
     private TaskResult.TaskStatus status;
 }

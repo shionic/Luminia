@@ -35,13 +35,11 @@ public class TaskService {
     }
 
     public TaskDto toDto(TaskRepository.TaskAndStatus e) {
-        return new TaskDto(e.getId(), e.getDisplayName(), null, e.getRank(), e.getTask(),
-                e.getDeadlineDate(), e.getImportantDate(), e.getStatus());
+        return new TaskDto(e.getId(), e.getDisplayName(), null, e.getTask(), e.getStatus());
     }
 
     public TaskDto toDto(Task e) {
         List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto);
-        return new TaskDto(e.getId(), e.getDisplayName(), attachmentDtoList, e.getRank(), e.getTask(),
-                e.getDeadlineDate(), e.getImportantDate(), null);
+        return new TaskDto(e.getId(), e.getDisplayName(), attachmentDtoList, e.getTask(), null);
     }
 }

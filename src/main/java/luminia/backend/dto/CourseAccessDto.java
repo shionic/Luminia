@@ -8,11 +8,9 @@ import luminia.backend.models.CourseAccess;
 @Getter
 @Setter
 public class CourseAccessDto extends CourseDto {
-    private int rank;
     private CourseAccess.CourseAccessStatus status;
-    public CourseAccessDto(Long id, String name, String description, int rank, CourseAccess.CourseAccessStatus status) {
-        super(id, name, description);
-        this.rank = rank;
+    public CourseAccessDto(Long id, String name, String description, UserDto teacher, CourseAccess.CourseAccessStatus status) {
+        super(id, name, description, teacher);
         this.status = status;
     }
 }

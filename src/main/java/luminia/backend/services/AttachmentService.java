@@ -3,6 +3,7 @@ package luminia.backend.services;
 import luminia.backend.dto.AttachmentDto;
 import luminia.backend.models.Attachment;
 import luminia.backend.repositories.AttachmentRepository;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,9 @@ public class AttachmentService {
     }
 
     public AttachmentDto toDto(Attachment a) {
+        if(!Hibernate.isInitialized(a)) {
+            return new AttachmentDto(a.getId(), null, null, 0, -1, null);
+        }
         return new AttachmentDto(a.getId(), a.getFileName(), a.getPath(), a.getSize(), a.getUser().getId(), a.getUploadDate());
     }
 }

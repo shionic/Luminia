@@ -22,7 +22,6 @@ public class CourseAccess {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    private int rank;
     private CourseAccessStatus status;
 
     public enum CourseAccessStatus {

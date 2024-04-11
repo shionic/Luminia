@@ -19,13 +19,13 @@ public class TaskResult {
     @SequenceGenerator(name = "task_results_gen", sequenceName = "task_results_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_assign_id")
+    private TaskAssign taskAssign;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "target_id")
     private User target;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private User author;
     private TaskStatus status;

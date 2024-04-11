@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import luminia.backend.dto.AttachmentDto;
 import luminia.backend.dto.TaskResultDto;
 import luminia.backend.models.Task;
+import luminia.backend.models.TaskAssign;
 import luminia.backend.models.TaskResult;
 import luminia.backend.models.User;
 import luminia.backend.repositories.TaskResultRepository;
@@ -25,13 +26,15 @@ import java.util.Optional;
 public class TaskResultService {
     private TaskResultRepository repository;
     private AttachmentService attachmentService;
+    private TaskAssignService taskAssignService;
+    private UserService userService;
 
-    public Optional<TaskResult> findByUserAndTask(User user, Task task) {
-        return repository.findByUserAndTask(user, task);
+    public Optional<TaskResult> findByUserAndTask(User user, TaskAssign taskAssign) {
+        return repository.findByUserAndTask(user, taskAssign);
     }
 
-    public Page<TaskResult> findAllByUserAndTask(User user, Task task, int page, int pageSize) {
-        return repository.findAllByUserAndTask(user, task, PageRequest.of(page, pageSize,
+    public Page<TaskResult> findAllByUserAndTask(User user, TaskAssign taskAssign, int page, int pageSize) {
+        return repository.findAllByUserAndTask(user, taskAssign, PageRequest.of(page, pageSize,
                 Sort.by(Sort.Direction.ASC, "uploadDate")));
     }
 
@@ -41,7 +44,7 @@ public class TaskResultService {
 
     public TaskResultDto toDto(TaskResult e) {
         List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto);
-        return new TaskResultDto(e.getId(), e.getTask().getId(), e.getTarget().getId(), e.getAuthor().getId(), e.getStatus(),
-                e.getRating(), attachmentDtoList, e.getUploadDate());
+        return new TaskResultDto(e.getId(), taskAssignService.toDto(e.getTaskAssign(), true), userService.toDto(e.getTarget()),
+                userService.toDto(e.getAuthor()), e.getStatus(), e.getRating(), attachmentDtoList, e.getUploadDate());
     }
 }

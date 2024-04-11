@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class UserDto {
     private Long id;
-    private double rating;
+    private Double rating;
 }
