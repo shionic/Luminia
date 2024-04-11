@@ -23,8 +23,11 @@ public class TaskResult {
     @JoinColumn(name = "task_id")
     private Task task;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "target_id")
+    private User target;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
     private TaskStatus status;
     private int rating;
     @ManyToMany(fetch = FetchType.LAZY)
@@ -33,6 +36,7 @@ public class TaskResult {
             joinColumns = @JoinColumn(name = "attachment_id"),
             inverseJoinColumns = @JoinColumn(name = "task_result_id"))
     private List<Attachment> attachments;
+    @Column(name = "upload_date")
     private LocalDateTime uploadDate;
 
     public enum TaskStatus {

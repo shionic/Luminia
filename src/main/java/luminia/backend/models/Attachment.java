@@ -3,6 +3,8 @@ package luminia.backend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity(name = "Attachment")
 @Table(name = "attachments")
 @Getter
@@ -19,4 +21,10 @@ public class Attachment {
     @Column(name = "file_name")
     private String fileName;
     private String path;
+    private long size;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @Column(name = "upload_date")
+    private LocalDateTime uploadDate;
 }

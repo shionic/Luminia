@@ -7,10 +7,7 @@ import luminia.backend.exceptions.IllegalArgumentException;
 import luminia.backend.services.TaskService;
 import luminia.backend.services.UserService;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -27,5 +24,10 @@ public class TaskController {
         }
         var usr = userService.getUser();
         return new ListDto<>(taskService.findByCourseAndUserWithSort(courseId, usr.getId(), PageRequest.of(pageId, TASK_PAGE_SIZE)).map(taskService::toDto));
+    }
+
+    @PostMapping("/uploadtaskresult")
+    public void upload() {
+
     }
 }
