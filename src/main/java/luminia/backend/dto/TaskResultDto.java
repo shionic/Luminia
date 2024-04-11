@@ -2,7 +2,7 @@ package luminia.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import luminia.backend.models.Task;
+import lombok.Setter;
 import luminia.backend.models.TaskResult;
 
 import java.time.LocalDateTime;
@@ -10,13 +10,14 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class TaskDto {
+@Setter
+public class TaskResultDto {
     private Long id;
-    private String displayName;
-    private List<AttachmentDto> attachments;
-    private int rank;
-    private Task.TaskType task;
-    private LocalDateTime deadlineDate;
-    private LocalDateTime importantDate;
+    private Long task_id;
+    private Long target_id;
+    private Long author_id;
     private TaskResult.TaskStatus status;
+    private int rating;
+    private List<AttachmentDto> attachments;
+    private LocalDateTime uploadDate;
 }

@@ -14,11 +14,20 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class UserService {
     private UserRepository userRepository;
+
+    public Optional<User> findById(Long aLong) {
+        return userRepository.findById(aLong);
+    }
+
+    public User getReferenceById(Long aLong) {
+        return userRepository.getReferenceById(aLong);
+    }
 
     /**
      * Return the user. Only for debug

@@ -31,7 +31,12 @@ public class CourseService {
 
     @Transactional
     public Page<CourseAccess> findByUser(User user, Pageable pageable) {
-        return courseAccessRepository.findByUser(user, pageable);
+        return courseAccessRepository.findByUserFetchCourse(user, pageable);
+    }
+
+    @Transactional
+    public Optional<CourseAccess> findAccessByCourseAndUser(Course course, User user) {
+        return courseAccessRepository.findByCourseAndUser(course, user);
     }
 
     @Transactional
@@ -42,6 +47,11 @@ public class CourseService {
     @Transactional
     public Optional<Course> findById(Long aLong) {
         return courseRepository.findById(aLong);
+    }
+
+    @Transactional
+    public Course getReferenceById(Long aLong) {
+        return courseRepository.getReferenceById(aLong);
     }
 
     public CourseDto toDto(Course course) {

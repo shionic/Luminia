@@ -40,6 +40,6 @@ public class TaskResult {
     private LocalDateTime uploadDate;
 
     public enum TaskStatus {
-        REJECTED, STARTED, NOT_STARTED, ACCEPT, ABSORBED
+        REJECTED, STARTED, NOT_STARTED, WAIT, ACCEPT, ABSORBED
     }
 }
