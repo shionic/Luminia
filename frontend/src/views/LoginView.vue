@@ -3,5 +3,6 @@
 </template>
 <script setup lang="ts">
 import LoginService from '@/services/login-service'
-LoginService.login();
+import baseService from '@/services/base-service';
+baseService.test();
 </script>
