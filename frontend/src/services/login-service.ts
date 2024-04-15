@@ -65,6 +65,7 @@ export default class LoginService {
 
     static async requireAuthorize() {
         if(!window.sessionStorage.getItem(EXPIRE_IN_KEY)) {
+            console.log("First authorization. EXPIRE_IN_KEY not found")
             this.login();
         }
         try {
@@ -77,6 +78,7 @@ export default class LoginService {
     static async refreshIfNeeded() {
         var expiredIn = parseInt(window.sessionStorage.getItem(EXPIRE_IN_KEY) || '0');
         var now = new Date().getTime() / 1000;
+        console.log("Token expired in ", expiredIn, " now ", now, " diff ", expiredIn - now)
         if(expiredIn - now > 5) {
             return;
         }

@@ -17,10 +17,10 @@ export default class BaseService {
             }
         })
         if(axiosResponse.status >= 200 && axiosResponse.status < 300) {
-            var data : T|null = JSON.parse(axiosResponse.data);
+            var data : T|null = axiosResponse.data;
             return new Result(data, null, null);
         } else {
-            var err : any = JSON.parse(axiosResponse.data);
+            var err : any = axiosResponse.data;
             return new Result<T>(null, err.error, err.code);
         }
     }
@@ -33,10 +33,10 @@ export default class BaseService {
             }
         })
         if(axiosResponse.status >= 200 && axiosResponse.status < 300) {
-            var data : T|null = JSON.parse(axiosResponse.data);
+            var data : T|null = axiosResponse.data;
             return new Result(data, null, null);
         } else {
-            var err : any = JSON.parse(axiosResponse.data);
+            var err : any = axiosResponse.data;
             return new Result<T>(null, err.error, err.code);
         }
     }
