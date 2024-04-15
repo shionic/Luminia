@@ -14,8 +14,7 @@ const buttonClasses = "button button-"+props.type
 button {
     border: none;
     border-radius: 10px;
-    margin: 5px;
-    padding: 10px;
+    padding: 15px;
     font-size: 16px;
     cursor: pointer;
     transition: 0.2s;

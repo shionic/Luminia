@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import TaskCard from '../components/TaskCard.vue'
+import TaskService from '@/services/task-service'
+TaskService.byStatus("NOT_STARTED", 0);
 </script>
 
 <template>
