@@ -2,6 +2,7 @@ package luminia.backend.controller;
 
 import lombok.AllArgsConstructor;
 import luminia.backend.dto.ListDto;
+import luminia.backend.dto.TaskAssignDto;
 import luminia.backend.dto.TaskDto;
 import luminia.backend.dto.TaskResultDto;
 import luminia.backend.exceptions.IllegalArgumentException;
@@ -24,18 +25,20 @@ public class TaskController {
     private static final int TASK_PAGE_SIZE = 30;
     private TaskService taskService;
     private TaskResultService taskResultService;
+    private TaskAssignService taskAssignService;
     private UserService userService;
     private CourseService courseService;
     private AttachmentService attachmentService;
     private TaskAssignService assignService;
 
-    @GetMapping("/by/course/{courseId}/page/{pageId}")
-    public ListDto<TaskDto> findByCourse(@PathVariable Long courseId, @PathVariable int pageId) {
+    @GetMapping("/by/status/{status}/page/{pageId}")
+    public ListDto<TaskAssignDto> findByStatus(@PathVariable TaskResult.TaskStatus status, @PathVariable int pageId) {
         if(pageId < 0) {
             throw new IllegalArgumentException("pageId cannot be less than 0");
         }
         var usr = userService.getUser();
-        return new ListDto<>(taskService.findByCourseAndUserWithSort(courseId, usr.getId(), PageRequest.of(pageId, TASK_PAGE_SIZE)).map(taskService::toDto));
+        return new ListDto<>(taskAssignService.findAllByUserAndStatus(usr.getEntity(), status,
+                PageRequest.of(pageId, 10)).map(taskAssignService::toDto));
     }
 
     @GetMapping("/by/id/{id}")
@@ -59,7 +62,7 @@ public class TaskController {
             throw new IllegalArgumentException("Attachments is empty");
         }
         var usr = userService.getUser();
-        var e = taskService.findByIdFetchAttachments(id);
+        var e = taskService.findById(id);
         if(e.isEmpty()) {
             throw new NotFoundException("Task not found");
         }

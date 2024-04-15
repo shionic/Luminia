@@ -19,6 +19,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class TaskService {
+    private CourseService courseService;
     private TaskRepository taskRepository;
     private AttachmentService attachmentService;
 
@@ -30,16 +31,20 @@ public class TaskService {
         return taskRepository.findByIdFetchAttachments(taskId);
     }
 
+    public Optional<Task> findById(Long taskId) {
+        return taskRepository.findById(taskId);
+    }
+
     public Task getReferenceById(Long aLong) {
         return taskRepository.getReferenceById(aLong);
     }
 
     public TaskDto toDto(TaskRepository.TaskAndStatus e) {
-        return new TaskDto(e.getId(), e.getDisplayName(), null, e.getTask(), e.getStatus());
+        return new TaskDto(e.getId(), e.getDisplayName(), null, null, e.getTask(), e.getStatus());
     }
 
     public TaskDto toDto(Task e) {
         List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto);
-        return new TaskDto(e.getId(), e.getDisplayName(), attachmentDtoList, e.getTask(), null);
+        return new TaskDto(e.getId(), e.getDisplayName(), courseService.toDto(e.getCourse()), attachmentDtoList, e.getTask(), null);
     }
 }

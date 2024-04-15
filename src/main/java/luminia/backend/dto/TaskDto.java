@@ -2,6 +2,8 @@ package luminia.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
+import luminia.backend.models.Course;
 import luminia.backend.models.Task;
 import luminia.backend.models.TaskResult;
 
@@ -10,9 +12,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class TaskDto {
     private Long id;
     private String displayName;
+    private CourseDto course;
     private List<AttachmentDto> attachments;
     private Task.TaskType task;
     private TaskResult.TaskStatus status;
