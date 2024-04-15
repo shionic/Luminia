@@ -10,8 +10,8 @@ const ACCESS_TOKEN_KEY : string = "access_token";
 const REFRESH_TOKEN_KEY : string = "refresh_token";
 const EXPIRE_IN_KEY : string = "expires_in";
 
-export default {
-    login() {
+export default class LoginService {
+    static login() {
         let requestParams = new URLSearchParams({
             response_type: "code",
             client_id: clientId,
@@ -19,13 +19,13 @@ export default {
             scope: 'read.scope write.scope'
         });
         window.location.href = serverUrl + "/oauth2/authorize?" + requestParams;
-    },
+    }
 
-    getAuthorizationHeader() : string {
+    static getAuthorizationHeader() : string {
         return 'Bearer '+window.sessionStorage.getItem(ACCESS_TOKEN_KEY);
-    },
+    }
 
-    getTokens(code : string) {
+    static getTokens(code : string) {
         let payload = new FormData()
         payload.append('grant_type', 'authorization_code')
         payload.append('code', code)
@@ -41,17 +41,17 @@ export default {
         ).then(response => {
             this.updateSesstionStorage(response);
         })
-    },
+    }
 
-    updateSesstionStorage(response : any) {
+    static updateSesstionStorage(response : any) {
         var now = new Date().getTime() / 1000;
         var expired = now + response.data[EXPIRE_IN_KEY];
         window.sessionStorage.setItem(ACCESS_TOKEN_KEY, response.data[ACCESS_TOKEN_KEY]);
         window.sessionStorage.setItem(REFRESH_TOKEN_KEY, response.data[REFRESH_TOKEN_KEY]);
         window.sessionStorage.setItem(EXPIRE_IN_KEY, expired);
-    },
+    }
 
-    async getTokenInfo() {
+    static async getTokenInfo() {
         await this.refreshIfNeeded();
         let payload = new FormData();
         payload.append('token', window.sessionStorage.getItem(ACCESS_TOKEN_KEY)  || '');
@@ -61,9 +61,9 @@ export default {
                 'Authorization': authHeaderValue
             }
         });
-    },
+    }
 
-    async requireAuthorize() {
+    static async requireAuthorize() {
         if(!window.sessionStorage.getItem(EXPIRE_IN_KEY)) {
             this.login();
         }
@@ -72,9 +72,9 @@ export default {
         } catch(e) {
             this.login();
         }
-    },
+    }
 
-    async refreshIfNeeded() {
+    static async refreshIfNeeded() {
         var expiredIn = parseInt(window.sessionStorage.getItem(EXPIRE_IN_KEY) || '0');
         var now = new Date().getTime() / 1000;
         if(expiredIn - now > 5) {
