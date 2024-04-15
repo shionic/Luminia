@@ -1,18 +1,12 @@
-import axios, { type AxiosResponse } from "axios";
-import LoginService from "./login-service"
+import BaseService from "./base-service"
 import type List from "./remote/list";
 import type TaskAssign from "./remote/taskassign";
+import type Result from "./remote/result";
 
 const serverUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default {
-    async byStatus(status: string, pageId: number) : Promise<AxiosResponse<List<TaskAssign>, any>> {
-        await LoginService.requireAuthorize();
-        var r = await axios.get<List<TaskAssign>, any>(serverUrl + "/task/by/status/"+status+"/page/"+pageId, {
-            headers: {
-                'Authorization': LoginService.getAuthorizationHeader()
-            }
-        })
-        return r;
+    async byStatus(status: string, pageId: number) : Promise<Result<List<TaskAssign>>> {
+        return await BaseService.get<List<TaskAssign>>("/task/by/status/"+status+"?pageId="+pageId);
     }
 }
