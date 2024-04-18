@@ -12,7 +12,7 @@ export default class TaskResult {
     public author: User
     public status: string
     public rating: number
-    public attachments: List<Attachment>
+    public attachments: Array<Attachment>
     public uploadDate: string
 
     constructor(
@@ -22,7 +22,7 @@ export default class TaskResult {
         author: User,
         status: string,
         rating: number,
-        attachments: List<Attachment>,
+        attachments: Array<Attachment>,
         uploadDate: string
     ) {
         this.id = id

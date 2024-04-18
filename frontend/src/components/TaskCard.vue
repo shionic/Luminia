@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import TaskAssign from '@/services/remote/taskassign';
+import { useRouter } from 'vue-router';
 var props = defineProps({task: {
     type: TaskAssign,
     required: true
 }})
+var $router = useRouter()
 const name = props.task.task.displayName;
 const description = props.task.variant
 const author = props.task.task.course.teacher.id;
 const category = props.task.task.course.name;
+function go() {
+    $router.push("/task/"+props.task.id)
+}
 </script>
 <template>
-    <div class="card task-card">
+    <div class="card task-card" @click="go">
         <div class="card-statusbar">
             Срочно
         </div>

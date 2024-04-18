@@ -1,17 +1,34 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Accordion from '../utils/animation.js'
+import Attachment from '@/services/remote/attachment.js';
+import LButton from './base/LButton.vue';
+var props = defineProps({attachment: {
+    type: Attachment,
+    required: true
+}})
+var ext = props.attachment.fileName.substring(props.attachment.fileName.lastIndexOf('.'))
+var isBrowserViewable = ext == '.pdf';
 var iframe = ref(null);
 var mydetails = ref(null);
 onMounted(() => {
     new Accordion(mydetails.value, "fileview-content");
 })
+async function downloadFile(url: string, fileName: string) {
+    const link = document.createElement('a'); // TODO Filename
+    link.href = url;
+    link.target = '_blank';
+    link.click();
+}
 </script>
 <template>
     <details ref="mydetails" class="fileview-details">
-        <summary>Файл 1</summary>
-        <div class="fileview-content">
-        <iframe ref="iframe" src="https://lyceum.urfu.ru/fileadmin/user_upload/docs/GOST_7.0.97-2016.pdf" v-resize="{ log: true }"></iframe>
+        <summary>{{ $props.attachment.fileName }}</summary>
+        <div v-if="isBrowserViewable" class="fileview-content">
+            <iframe ref="iframe" :src="$props.attachment.path" v-resize="{ log: true }"></iframe>
+        </div>
+        <div v-if="!isBrowserViewable" class="fileview-content">
+            <LButton type="primary" @click="downloadFile($props.attachment.path, $props.attachment.fileName)">Скачать</LButton>
         </div>
     </details>
 </template>

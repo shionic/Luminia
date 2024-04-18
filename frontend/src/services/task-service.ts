@@ -7,6 +7,10 @@ const serverUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default class TaskService {
     static async byStatus(status: string, pageId: number) : Promise<Result<List<TaskAssign>>> {
-        return await BaseService.get<List<TaskAssign>>("/task/by/status/"+status+"?pageId="+pageId);
+        return await BaseService.get<List<TaskAssign>>("/taskassign/by/status/"+status+"?pageId="+pageId);
+    }
+
+    static async byId(id: number) : Promise<Result<TaskAssign>> {
+        return await BaseService.get<TaskAssign>("/taskassign/by/id/"+id);
     }
 }

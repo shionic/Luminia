@@ -1,22 +1,38 @@
 <script setup lang="ts">
 import FileView from '../components/FileView.vue'
-const name = "Разработка красивого веб дизайна";
-const category = "Современный дизайн";
-const variant = "Сайт приемной комиссии ВУЗ\'а";
-const variantNum = "11";
-const author = "Маргарита Квакова Шулинова";
+import { ref, type Ref } from 'vue';
+import type Result from '@/services/remote/result';
+import type TaskAssign from '@/services/remote/taskassign';
+import TaskService from '@/services/task-service';
+import AttachmentService from '@/services/attachment-service';
+import type Attachment from '@/services/remote/attachment';
+var props = defineProps((["id"]))
+var taskAssignId : number = +props.id;
+var taskAssign : Ref<Result<TaskAssign>|null> = ref(null);
+TaskService.byId(taskAssignId).then(t => {
+    taskAssign.value = t;
+})
+var uploadFiles : Ref<Array<Attachment>> = ref([]);
+var uploadInput : Ref<HTMLInputElement|null> = ref(null);
+async function uploadFile() {
+    let files = uploadInput.value?.files;
+    let fileData = files?.[0] as any;
+    let fileName = files?.[0].name as string;
+    let attachment = (await AttachmentService.upload(fileData, fileName)).get();
+    uploadFiles.value.push(attachment);
+}
 </script>
 <template>
     <div class="welcome">
         <div class="tv-status">Срочно</div>
         <div class="hcenter welcome-section">
-            <span class="tv-name">{{ name }}</span>
+            <span class="tv-name">{{ taskAssign?.data?.task.displayName }}</span>
         </div>
         <div class="hcenter welcome-section">
-            <span class="tv-comment">Ваш вариант {{ variantNum }}:</span> <span class="tv-description">{{ variant }}</span>
+            <span class="tv-comment">Ваш вариант:</span> <span class="tv-description">{{ taskAssign?.data?.variant }}</span>
         </div>
         <div class="hcenter welcome-section">
-            <a href="/" class="tv-welcome-link">{{ category }}</a> | <a href="/" class="tv-welcome-link">{{ author }}</a>
+            <a href="/" class="tv-welcome-link">{{ taskAssign?.data?.task.course.name }}</a> | <a href="/" class="tv-welcome-link">{{ taskAssign?.data?.task.course.teacher.id }}</a>
         </div>
     </div>
     <main>
@@ -34,8 +50,7 @@ const author = "Маргарита Квакова Шулинова";
                         <span >Материалы задачи</span>
                     </div>
                 </div>
-                <FileView></FileView>
-                <FileView></FileView>
+                <FileView v-if="taskAssign != null" v-for="a in taskAssign?.data?.task.attachments" v-bind:key="a.id" :attachment="a"></FileView>
             </div>
             <div class="tv-container-element">
                 <div class="hcenter">
@@ -46,11 +61,11 @@ const author = "Маргарита Квакова Шулинова";
                         <span class="card-comment">Вы еще не загрузили решение</span>
                     </div>
                 </div>
-                <FileView></FileView>
+                <FileView v-for="a in uploadFiles" v-bind:key="a.id" :attachment="a"></FileView>
     
         <div class="upload-container card">
             <div class="hcenter">
-                    <input type="file" id="avatar" name="avatar" accept="*" /> <l-button type="primary">Загрузить файл</l-button>
+                    <input ref="uploadInput" type="file" id="avatar" name="avatar" accept="*" /> <l-button type="primary" @click="uploadFile">Загрузить файл</l-button>
             </div>
         </div>
             </div>
@@ -106,7 +121,7 @@ const author = "Маргарита Квакова Шулинова";
     flex-wrap: wrap;
 }
 
-.tv-status {
+.tv-status { /* TODO */
     display: flex;
     float: right;
 }

@@ -5,7 +5,7 @@ import type List from './list'
 export default class Task {
     public id: number
     public displayName: string
-    public attachments: List<Attachment>
+    public attachments: Array<Attachment>
     public task: string
     public course: Course
     public status: string
@@ -13,7 +13,7 @@ export default class Task {
     constructor(
         id: number,
         displayName: string,
-        attachments: List<Attachment>,
+        attachments: Array<Attachment>,
         task: string,
         course: Course,
         status: string

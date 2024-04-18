@@ -16,9 +16,10 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/task',
+      path: '/task/:id',
       name: 'task',
-      component: () => import('../views/TaskView.vue')
+      component: () => import('../views/TaskView.vue'),
+      props: true
     },
     {
       path: '/login',
