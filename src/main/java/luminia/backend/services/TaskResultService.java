@@ -42,9 +42,9 @@ public class TaskResultService {
         return repository.save(entity);
     }
 
-    public TaskResultDto toDto(TaskResult e) {
-        List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto);
-        return new TaskResultDto(e.getId(), taskAssignService.toDto(e.getTaskAssign(), true), userService.toDto(e.getTarget()),
+    public TaskResultDto toDto(TaskResult e, boolean fetchAttachments) {
+        List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto, fetchAttachments);
+        return new TaskResultDto(e.getId(), taskAssignService.toDto(e.getTaskAssign(), false), userService.toDto(e.getTarget()),
                 userService.toDto(e.getAuthor()), e.getStatus(), e.getRating(), attachmentDtoList, e.getUploadDate());
     }
 }

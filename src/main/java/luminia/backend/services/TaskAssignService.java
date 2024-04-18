@@ -29,12 +29,16 @@ public class TaskAssignService {
         return repository.findAllByUserAndStatus(user, status, pageable);
     }
 
-    public TaskAssignDto toDto(TaskAssign t) {
-        return toDto(t, true);
+    public Optional<TaskAssign> findByIdAndUserFetchAll(Long id) {
+        return repository.findByIdAndUserFetchAll(id);
     }
 
-    public TaskAssignDto toDto(TaskAssign t, boolean includeTask) {
+    public TaskAssignDto toDto(TaskAssign t) {
+        return toDto(t, false);
+    }
+
+    public TaskAssignDto toDto(TaskAssign t, boolean fetchAttachments) {
         return new TaskAssignDto(t.getId(), t.getVariant(), t.getType(), t.getDeadlineDate(), t.getImportantDate(),
-                includeTask ? taskService.toDto(t.getTask()) : null, userService.toDto(t.getTarget()));
+                taskService.toDto(t.getTask(), fetchAttachments), userService.toDto(t.getTarget()));
     }
 }

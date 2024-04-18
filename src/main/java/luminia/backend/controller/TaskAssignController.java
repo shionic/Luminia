@@ -20,8 +20,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/task")
-public class TaskController {
+@RequestMapping("/taskassign")
+public class TaskAssignController {
     private static final int TASK_PAGE_SIZE = 30;
     private TaskService taskService;
     private TaskResultService taskResultService;
@@ -31,8 +31,8 @@ public class TaskController {
     private AttachmentService attachmentService;
     private TaskAssignService assignService;
 
-    @GetMapping("/by/status/{status}/page/{pageId}")
-    public ListDto<TaskAssignDto> findByStatus(@PathVariable TaskResult.TaskStatus status, @PathVariable int pageId) {
+    @GetMapping("/by/status/{status}")
+    public ListDto<TaskAssignDto> findByStatus(@PathVariable TaskResult.TaskStatus status, @RequestParam(name ="pageId", defaultValue ="0") int pageId) {
         if(pageId < 0) {
             throw new IllegalArgumentException("pageId cannot be less than 0");
         }
@@ -42,18 +42,13 @@ public class TaskController {
     }
 
     @GetMapping("/by/id/{id}")
-    public TaskDto findById(@PathVariable long id) {
+    public TaskAssignDto findById(@PathVariable long id) {
         var usr = userService.getUser();
-        var e = taskService.findByIdFetchAttachments(id);
+        var e = taskAssignService.findByIdAndUserFetchAll(id);
         if(e.isEmpty()) {
-            throw new NotFoundException("Task not found");
+            throw new NotFoundException("TaskAssign not found");
         }
-        var task = e.get();
-        var access = courseService.findAccessByCourseAndUser(task.getCourse(), usr.getEntity());
-        if(access.isEmpty()) {
-            throw new SecurityException("Access denied");
-        }
-        return taskService.toDto(e.get());
+        return taskAssignService.toDto(e.get(), true);
     }
 
     @PostMapping("/by/id/{id}/upload")
@@ -100,7 +95,7 @@ public class TaskController {
         result.setAttachments(attachments);
         result.setUploadDate(LocalDateTime.now());
         result = taskResultService.save(result);
-        return taskResultService.toDto(result);
+        return taskResultService.toDto(result, false);
     }
 
     public record UploadTask(Long userId, List<Long> attachments) {

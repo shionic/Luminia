@@ -6,13 +6,10 @@ import luminia.backend.dto.TaskDto;
 import luminia.backend.models.Task;
 import luminia.backend.repositories.TaskRepository;
 import luminia.backend.utils.JpaUtils;
-import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +40,8 @@ public class TaskService {
         return new TaskDto(e.getId(), e.getDisplayName(), null, null, e.getTask(), e.getStatus());
     }
 
-    public TaskDto toDto(Task e) {
-        List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto);
+    public TaskDto toDto(Task e, boolean fetchAttachments) {
+        List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto, fetchAttachments);
         return new TaskDto(e.getId(), e.getDisplayName(), courseService.toDto(e.getCourse()), attachmentDtoList, e.getTask(), null);
     }
 }

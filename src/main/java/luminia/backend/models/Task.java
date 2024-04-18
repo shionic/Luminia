@@ -2,6 +2,8 @@ package luminia.backend.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
