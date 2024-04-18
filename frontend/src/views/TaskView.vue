@@ -29,38 +29,33 @@ const author = "Маргарита Квакова Шулинова";
         </p>
         <div class="tv-container">
             <div class="tv-container-element">
+                <div class="hcenter">
+                    <div>
+                        <span >Материалы задачи</span>
+                    </div>
+                </div>
+                <FileView></FileView>
                 <FileView></FileView>
             </div>
             <div class="tv-container-element">
-                2
-            </div>
-        </div>
-        <div class="flex hcenter">
+                <div class="hcenter">
+                    <div>
+                        <span >Решение 0</span>
+                    </div>
+                    <div>
+                        <span class="card-comment">Вы еще не загрузили решение</span>
+                    </div>
+                </div>
+                <FileView></FileView>
     
         <div class="upload-container card">
             <div class="hcenter">
-                <p>
-                    <b>Загрузить отчет ( PDF )</b>
-                </p>
-            </div>
-            <div class="hcenter">
-                <input type="file" id="avatar" name="avatar" accept="application/pdf" />
-            </div>
-            <div class="hcenter">
-                <p>
-                    <b>Загрузить дополнительные файлы ( ZIP )</b>
-                </p>
-            </div>
-            <div class="hcenter">
-                <input type="file" id="avatar" name="avatar" accept="*" />
-            </div>
-            <div class="hcenter">
-                <l-button type="primary">Загрузить решение</l-button>
-            </div>
-            <div class="hcenter">
-                <span class="card-comment">Вы еще не загрузили решение</span>
+                    <input type="file" id="avatar" name="avatar" accept="*" /> <l-button type="primary">Загрузить файл</l-button>
             </div>
         </div>
+            </div>
+        </div>
+        <div class="flex hcenter">
         </div>
     </main>
 </template>
@@ -96,6 +91,9 @@ const author = "Маргарита Квакова Шулинова";
     flex-direction: column;
     flex-basis: 100%;
     flex: 1;
+    border: var(--color-primary-background) solid 2px;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .tv-container-element+.tv-container-element {
@@ -106,7 +104,6 @@ const author = "Маргарита Квакова Шулинова";
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
 }
 
 .tv-status {

@@ -31,6 +31,9 @@ onMounted(() => {
     min-height: 900px;
 }
 .fileview-details summary + .fileview-content {
+    margin-top: 0px;
+}
+.fileview-details + .fileview-details {
     margin-top: 10px;
 }
 </style>

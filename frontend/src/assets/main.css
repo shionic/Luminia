@@ -50,17 +50,21 @@ nav a + a {
 
 main {
     padding-left: 20px;
+    padding-right: 40px;
 }
 
 .card {
     border: var(--color-primary) solid 4px;
     border-radius: 15px;
     padding: 20px;
-    width: fit-content;
     color: var(--color-black);
     transition: 0.5s;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.fit-content {
+    width: fit-content;
 }
 
 .card + .card {
