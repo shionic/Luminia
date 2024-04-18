@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import TaskCard from '../components/TaskCard.vue'
 import TaskService from '@/services/task-service'
-TaskService.byStatus("NOT_STARTED", 0);
+import Result from '@/services/remote/result';
+import List from '@/services/remote/list';
+import TaskAssign from '@/services/remote/taskassign';
+import { ref, type Ref } from 'vue';
+var notStartedTasks : Ref<Result<List<TaskAssign>>|null> = ref(null);
+TaskService.byStatus("NOT_STARTED", 0).then(t => {
+  notStartedTasks.value = t;
+})
 </script>
 
 <template>
@@ -18,9 +25,7 @@ TaskService.byStatus("NOT_STARTED", 0);
   </div>
   <main>
     <h2>Текущие задания</h2>
-    <task-card>
-    </task-card>
-    <task-card>
+    <task-card v-if="notStartedTasks != null" v-for="task in notStartedTasks.data?.list" :task="task">
     </task-card>
   </main>
 </template>

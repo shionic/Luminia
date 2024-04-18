@@ -1,8 +1,13 @@
 <script setup lang="ts">
-const name = 'Разработка красивого веб дизайна';
-const description = 'Сайт приемной комиссии ВУЗ\'а'
-const author = 'Маргарита Квакова Шулинова';
-const category = 'Современный дизайн';
+import TaskAssign from '@/services/remote/taskassign';
+var props = defineProps({task: {
+    type: TaskAssign,
+    required: true
+}})
+const name = props.task.task.displayName;
+const description = props.task.variant
+const author = props.task.task.course.teacher.id;
+const category = props.task.task.course.name;
 </script>
 <template>
     <div class="card task-card">
