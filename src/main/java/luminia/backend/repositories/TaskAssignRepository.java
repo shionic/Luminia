@@ -16,7 +16,7 @@ public interface TaskAssignRepository extends JpaRepository<TaskAssign, Long> {
     @Query("select t from TaskAssign t join fetch t.task join fetch t.task.course join fetch t.task.course.teacher "+
             "where t.target = ?1 and COALESCE( (select r.status from TaskResult r where r.target = ?1 and r.author = ?1 and r.status != 4), 2) = ?2")
     Page<TaskAssign> findAllByUserAndStatus(User user, TaskResult.TaskStatus status, Pageable pageable);
-    @Query("select t from TaskAssign t join fetch t.task left join t.task.attachments join join fetch t.task.course join fetch t.task.course.teacher "+
+    @Query("select t from TaskAssign t join fetch t.task join fetch t.task.course join fetch t.task.course.teacher "+
             "where t.id = ?1")
     Optional<TaskAssign> findByIdAndUserFetchAll(Long id);
 }

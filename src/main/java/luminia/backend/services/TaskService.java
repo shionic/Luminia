@@ -20,14 +20,6 @@ public class TaskService {
     private TaskRepository taskRepository;
     private AttachmentService attachmentService;
 
-    public Page<TaskRepository.TaskAndStatus> findByCourseAndUserWithSort(Long courseId, Long userId, Pageable pageable) {
-        return taskRepository.findAllByCourseAndUserWithSort(courseId, userId, pageable);
-    }
-
-    public Optional<Task> findByIdFetchAttachments(Long taskId) {
-        return taskRepository.findByIdFetchAttachments(taskId);
-    }
-
     public Optional<Task> findById(Long taskId) {
         return taskRepository.findById(taskId);
     }
@@ -36,12 +28,13 @@ public class TaskService {
         return taskRepository.getReferenceById(aLong);
     }
 
-    public TaskDto toDto(TaskRepository.TaskAndStatus e) {
-        return new TaskDto(e.getId(), e.getDisplayName(), null, null, e.getTask(), e.getStatus());
-    }
-
     public TaskDto toDto(Task e, boolean fetchAttachments) {
-        List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto, fetchAttachments);
+        List<AttachmentDto> attachmentDtoList;
+        if(fetchAttachments) {
+            attachmentDtoList = attachmentService.findAllById(e.getAttachments()).stream().map(attachmentService::toDto).toList();
+        } else {
+            attachmentDtoList = List.of();
+        }
         return new TaskDto(e.getId(), e.getDisplayName(), courseService.toDto(e.getCourse()), attachmentDtoList, e.getTask(), null);
     }
 }

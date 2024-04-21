@@ -21,6 +21,10 @@ public class TaskAssignService {
     private TaskService taskService;
     private TaskAssignRepository repository;
 
+    public TaskAssign getReferenceById(Long aLong) {
+        return repository.getReferenceById(aLong);
+    }
+
     public Optional<TaskAssign> findByTaskAndUser(Task task, User user) {
         return repository.findByTaskAndTarget(task, user);
     }

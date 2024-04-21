@@ -30,12 +30,7 @@ public class TaskResult {
     private User author;
     private TaskStatus status;
     private int rating;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "tasks_result_attachments",
-            joinColumns = @JoinColumn(name = "attachment_id"),
-            inverseJoinColumns = @JoinColumn(name = "task_result_id"))
-    private List<Attachment> attachments;
+    private List<Long> attachments;
     @Column(name = "upload_date")
     private LocalDateTime uploadDate;
 

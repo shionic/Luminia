@@ -43,7 +43,12 @@ public class TaskResultService {
     }
 
     public TaskResultDto toDto(TaskResult e, boolean fetchAttachments) {
-        List<AttachmentDto> attachmentDtoList = JpaUtils.mapIfInitialized(e.getAttachments(), attachmentService::toDto, fetchAttachments);
+        List<AttachmentDto> attachmentDtoList;
+        if(fetchAttachments) {
+            attachmentDtoList = attachmentService.findAllById(e.getAttachments()).stream().map(attachmentService::toDto).toList();
+        } else {
+            attachmentDtoList = List.of();
+        }
         return new TaskResultDto(e.getId(), taskAssignService.toDto(e.getTaskAssign(), false), userService.toDto(e.getTarget()),
                 userService.toDto(e.getAuthor()), e.getStatus(), e.getRating(), attachmentDtoList, e.getUploadDate());
     }

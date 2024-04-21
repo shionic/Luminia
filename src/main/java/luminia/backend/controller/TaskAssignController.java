@@ -51,6 +51,16 @@ public class TaskAssignController {
         return taskAssignService.toDto(e.get(), true);
     }
 
+    @GetMapping("/by/id/{id}/result")
+    public TaskResultDto findResultById(@PathVariable long id) {
+        var usr = userService.getUser();
+        var e = taskResultService.findByUserAndTask(usr.getEntity(), taskAssignService.getReferenceById(id));
+        if(e.isEmpty()) {
+            throw new NotFoundException("TaskResult not found");
+        }
+        return taskResultService.toDto(e.get(), true);
+    }
+
     @PostMapping("/by/id/{id}/upload")
     public TaskResultDto upload(@PathVariable long id, @RequestBody UploadTask request) {
         if(request.attachments == null || request.attachments.isEmpty()) {
@@ -86,13 +96,13 @@ public class TaskAssignController {
                 throw new IllegalArgumentException("Task not assigned to target user");
             }
         }
-        List<Attachment> attachments = attachmentService.findAllById(request.attachments);
+        //List<Attachment> attachments = attachmentService.findAllById(request.attachments);
         TaskResult result = new TaskResult();
         result.setTaskAssign(assign.get());
         result.setAuthor(usr.getEntity());
         result.setTarget(target);
         result.setStatus(isTeacher ? TaskResult.TaskStatus.ACCEPT : TaskResult.TaskStatus.WAIT);
-        result.setAttachments(attachments);
+        result.setAttachments(request.attachments);
         result.setUploadDate(LocalDateTime.now());
         result = taskResultService.save(result);
         return taskResultService.toDto(result, false);

@@ -27,12 +27,7 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "tasks_attachments",
-            joinColumns = @JoinColumn(name = "attachment_id"),
-            inverseJoinColumns = @JoinColumn(name = "task_id"))
-    private List<Attachment> attachments;
+    private List<Long> attachments;
     private TaskType task;
 
     public enum TaskType {
