@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, type PropType } from 'vue';
 import Accordion from '../utils/animation.js'
 import Attachment from '@/services/remote/attachment.js';
 import LButton from './base/LButton.vue';
 var props = defineProps({attachment: {
-    type: Attachment,
+    type: Object as PropType<Attachment>,
     required: true
 }})
 var ext = props.attachment.fileName.substring(props.attachment.fileName.lastIndexOf('.'))
@@ -25,7 +25,7 @@ async function downloadFile(url: string, fileName: string) {
     <details ref="mydetails" class="fileview-details">
         <summary>{{ $props.attachment.fileName }}</summary>
         <div v-if="isBrowserViewable" class="fileview-content">
-            <iframe ref="iframe" :src="$props.attachment.path" v-resize="{ log: true }"></iframe>
+            <iframe ref="iframe" :src="$props.attachment.path" v-resize="{ }"></iframe>
         </div>
         <div v-if="!isBrowserViewable" class="fileview-content">
             <LButton type="primary" @click="downloadFile($props.attachment.path, $props.attachment.fileName)">Скачать</LButton>

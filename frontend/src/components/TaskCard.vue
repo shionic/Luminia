@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import TaskAssign from '@/services/remote/taskassign';
+import type { PropType } from 'vue';
 import { useRouter } from 'vue-router';
 var props = defineProps({task: {
-    type: TaskAssign,
+    type: Object as PropType<TaskAssign>,
     required: true
 }})
 var $router = useRouter()
