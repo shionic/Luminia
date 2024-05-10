@@ -15,8 +15,8 @@ export default class TaskService {
         return await BaseService.get<TaskAssign>("/taskassign/by/id/"+id);
     }
 
-    static async getResultById(id: number) : Promise<Result<TaskResult>> {
-        return await BaseService.get<TaskResult>("/taskassign/by/id/"+id+"/result");
+    static async getResultById(id: number, isSelf: boolean) : Promise<Result<TaskResult>> {
+        return await BaseService.get<TaskResult>("/taskassign/by/id/"+id+"/result?self="+isSelf);
     }
 
     static async upload(id: number, attachments : Array<number>) : Promise<Result<TaskResult>> {
