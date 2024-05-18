@@ -7,8 +7,12 @@ import type TaskResult from "./remote/taskresult";
 const serverUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default class TaskService {
-    static async byStatus(status: string, pageId: number) : Promise<Result<List<TaskAssign>>> {
-        return await BaseService.get<List<TaskAssign>>("/taskassign/by/status/"+status+"?pageId="+pageId);
+    static async byStatus(status: string, courseId: number|null, pageId: number) : Promise<Result<List<TaskAssign>>> {
+        if(courseId) {
+            return await BaseService.get<List<TaskAssign>>("/taskassign/by/status/"+status+"?pageId="+pageId+"&courseId="+courseId);
+        } else {
+            return await BaseService.get<List<TaskAssign>>("/taskassign/by/status/"+status+"?pageId="+pageId);
+        }
     }
 
     static async byId(id: number) : Promise<Result<TaskAssign>> {

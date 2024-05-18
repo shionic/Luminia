@@ -7,6 +7,7 @@ import TaskService from '@/services/task-service';
 import AttachmentService from '@/services/attachment-service';
 import type Attachment from '@/services/remote/attachment';
 import type TaskResult from '@/services/remote/taskresult';
+import UserLink from '@/components/UserLink.vue';
 // Task
 var props = defineProps((["id"]))
 var taskAssignId: number = +props.id;
@@ -74,8 +75,7 @@ async function uploadResult() {
                 }}</span>
         </div>
         <div class="hcenter welcome-section">
-            <a href="/" class="tv-welcome-link">{{ taskAssign?.data?.task.course.name }}</a> | <a href="/"
-                class="tv-welcome-link">{{ taskAssign?.data?.task.course.teacher.id }}</a>
+            <RouterLink :to="'/course/'+taskAssign?.data?.task.course.id" class="tv-welcome-link">{{ taskAssign?.data?.task.course.name }}</RouterLink> | <user-link :user="taskAssign?.data?.task.course.teacher"></user-link>
         </div>
     </div>
     <main>

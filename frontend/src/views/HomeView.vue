@@ -49,10 +49,10 @@ function go() {
     </div>
   </div>
   <main>
-    <TasksView header="Решение отклонено преподавателем" type="REJECTED" @update="(e) => addUncompleted(e, 10)"></TasksView>
-    <TasksView header="Начато" type="STARTED" @update="(e) => addUncompleted(e, 5)"></TasksView>
-    <TasksView header="Не начато" type="NOT_STARTED" @update="(e) => addUncompleted(e, 1)"></TasksView>
-    <TasksView header="Ожидает проверки преподавателем" type="WAIT"></TasksView>
+    <TasksView header="Решение отклонено преподавателем" type="REJECTED" :course-id="null" @update="(e) => addUncompleted(e, 10)"></TasksView>
+    <TasksView header="Начато" type="STARTED" :course-id="null" @update="(e) => addUncompleted(e, 5)"></TasksView>
+    <TasksView header="Не начато" type="NOT_STARTED" :course-id="null" @update="(e) => addUncompleted(e, 1)"></TasksView>
+    <TasksView header="Ожидает проверки преподавателем" :course-id="null" type="WAIT"></TasksView>
   </main>
 </template>
 <style>
