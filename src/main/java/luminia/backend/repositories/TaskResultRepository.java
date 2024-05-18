@@ -15,6 +15,8 @@ import java.util.Optional;
 public interface TaskResultRepository extends JpaRepository<TaskResult, Long> {
     @Query("select tr from TaskResult tr where tr.target = ?1 and tr.author = ?1 and tr.taskAssign = ?2 and tr.status != 4")
     Optional<TaskResult> findByUserAndTask(User user, TaskAssign task);
+    @Query("select tr from TaskResult tr where tr.target = ?1 and tr.author != ?1 and tr.taskAssign = ?2 and tr.status != 4")
+    Optional<TaskResult> findByUserAndTaskTeacher(User user, TaskAssign task);
     @Query("select tr from TaskResult tr where tr.target = ?1 and tr.taskAssign = ?2")
     Page<TaskResult> findAllByUserAndTask(User user, TaskAssign task, Pageable pageable);
 }

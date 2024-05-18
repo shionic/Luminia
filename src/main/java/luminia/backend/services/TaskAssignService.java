@@ -2,16 +2,14 @@ package luminia.backend.services;
 
 import lombok.AllArgsConstructor;
 import luminia.backend.dto.TaskAssignDto;
-import luminia.backend.models.Task;
-import luminia.backend.models.TaskAssign;
-import luminia.backend.models.TaskResult;
-import luminia.backend.models.User;
+import luminia.backend.models.*;
 import luminia.backend.repositories.TaskAssignRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -35,6 +33,21 @@ public class TaskAssignService {
 
     public Optional<TaskAssign> findByIdAndUserFetchAll(Long id) {
         return repository.findByIdAndUserFetchAll(id);
+    }
+
+    public <S extends TaskAssign> S save(S entity) {
+        return repository.save(entity);
+    }
+
+    public <S extends TaskAssign> List<S> saveAll(Iterable<S> entities) {
+        return repository.saveAll(entities);
+    }
+
+    public Page<TaskAssign> findAllByTask(Task task, Pageable pageable) {
+        return repository.findAllByTask(task, pageable);
+    }
+    public Page<TaskAssign> findAllByUserAndStatusAndCourse(User user, TaskResult.TaskStatus status, Course course, Pageable pageable) {
+        return repository.findAllByUserAndStatusAndCourse(user, status, course, pageable);
     }
 
     public TaskAssignDto toDto(TaskAssign t) {

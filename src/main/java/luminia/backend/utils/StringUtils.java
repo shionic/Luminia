@@ -1,5 +1,6 @@
 package luminia.backend.utils;
 
+import java.util.Optional;
 import java.util.Random;
 
 public class StringUtils {
@@ -13,5 +14,11 @@ public class StringUtils {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
+    }
+
+    public static Optional<String> getExtension(String filename) {
+        return Optional.ofNullable(filename)
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
 }

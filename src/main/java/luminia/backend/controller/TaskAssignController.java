@@ -1,5 +1,6 @@
 package luminia.backend.controller;
 
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import luminia.backend.dto.ListDto;
 import luminia.backend.dto.TaskAssignDto;
@@ -7,11 +8,9 @@ import luminia.backend.dto.TaskDto;
 import luminia.backend.dto.TaskResultDto;
 import luminia.backend.exceptions.IllegalArgumentException;
 import luminia.backend.exceptions.NotFoundException;
-import luminia.backend.models.Attachment;
-import luminia.backend.models.CourseAccess;
-import luminia.backend.models.TaskResult;
-import luminia.backend.models.User;
+import luminia.backend.models.*;
 import luminia.backend.services.*;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,13 +31,22 @@ public class TaskAssignController {
     private TaskAssignService assignService;
 
     @GetMapping("/by/status/{status}")
-    public ListDto<TaskAssignDto> findByStatus(@PathVariable TaskResult.TaskStatus status, @RequestParam(name ="pageId", defaultValue ="0") int pageId) {
+    public ListDto<TaskAssignDto> findByStatus(@PathVariable TaskResult.TaskStatus status,
+                                               @RequestParam(name ="pageId", defaultValue ="0") int pageId,
+                                               @RequestParam(name = "courseId", defaultValue = "-1") long courseId) {
         if(pageId < 0) {
             throw new IllegalArgumentException("pageId cannot be less than 0");
         }
         var usr = userService.getUser();
-        return new ListDto<>(taskAssignService.findAllByUserAndStatus(usr.getEntity(), status,
-                PageRequest.of(pageId, 10)).map(taskAssignService::toDto));
+        Page<TaskAssign> r;
+        if(courseId < 0) {
+            r = taskAssignService.findAllByUserAndStatus(usr.getEntity(), status,
+                    PageRequest.of(pageId, 10));
+        } else {
+            r = taskAssignService.findAllByUserAndStatusAndCourse(usr.getEntity(), status, courseService.getReferenceById(courseId),
+                    PageRequest.of(pageId, 10));
+        }
+        return new ListDto<>(r.map(taskAssignService::toDto));
     }
 
     @GetMapping("/by/id/{id}")
@@ -52,9 +60,9 @@ public class TaskAssignController {
     }
 
     @GetMapping("/by/id/{id}/result")
-    public TaskResultDto findResultById(@PathVariable long id) {
+    public TaskResultDto findResultById(@PathVariable long id, @RequestParam(value = "self", defaultValue = "true") boolean self) {
         var usr = userService.getUser();
-        var e = taskResultService.findByUserAndTask(usr.getEntity(), taskAssignService.getReferenceById(id));
+        var e = taskResultService.findByUserAndTask(usr.getEntity(), taskAssignService.getReferenceById(id), self);
         if(e.isEmpty()) {
             throw new NotFoundException("TaskResult not found");
         }

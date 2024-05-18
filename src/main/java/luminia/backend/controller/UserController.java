@@ -14,6 +14,7 @@ public class UserController {
     private UserService userService;
     @GetMapping("/current")
     public UserDto getCurrentUser() {
-        return userService.toDto(userService.getUser().getEntity());
+        var user = userService.findById(userService.getUser().getId()).orElse(null);
+        return userService.toDto(user, true);
     }
 }

@@ -42,7 +42,8 @@ public class AttachmentService {
         attachment.setUser(user);
         attachment.setSize(bytes.length);
         attachment.setUploadDate(LocalDateTime.now());
-        s3Service.upload(attachment.getPath(), contentType, bytes);
+        var ext = StringUtils.getExtension(fileName).orElse("");
+        s3Service.upload(attachment.getPath()+ext, contentType, bytes);
         return repository.save(attachment);
     }
 

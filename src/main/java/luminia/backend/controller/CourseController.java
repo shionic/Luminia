@@ -22,7 +22,7 @@ public class CourseController {
     private UserService userService;
     @GetMapping("/by/id/{id}")
     public CourseDto findById(@PathVariable Long id) {
-        var o = courseService.findById(id);
+        var o = courseService.findWithFetchAll(id);
         if(o.isEmpty()) {
             throw new NotFoundException("Course");
         }

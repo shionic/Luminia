@@ -10,4 +10,12 @@ import lombok.Setter;
 public class UserDto {
     private Long id;
     private Double rating;
+    private String username;
+    private String fullName;
+    //
+    private Long discordId;
+    private String socialUsername;
+    //
+    private boolean nameProtected;
+    private boolean socialProtected;
 }

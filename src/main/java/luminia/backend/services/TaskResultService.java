@@ -29,8 +29,12 @@ public class TaskResultService {
     private TaskAssignService taskAssignService;
     private UserService userService;
 
-    public Optional<TaskResult> findByUserAndTask(User user, TaskAssign taskAssign) {
-        return repository.findByUserAndTask(user, taskAssign);
+    public Optional<TaskResult> findByUserAndTask(User user, TaskAssign taskAssign, boolean self) {
+        if(self) {
+            return repository.findByUserAndTask(user, taskAssign);
+        } else {
+            return repository.findByUserAndTaskTeacher(user, taskAssign);
+        }
     }
 
     public Page<TaskResult> findAllByUserAndTask(User user, TaskAssign taskAssign, int page, int pageSize) {

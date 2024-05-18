@@ -44,10 +44,18 @@ public class UserService {
     }
 
     public UserDto toDto(User user) {
+        return toDto(user, false);
+    }
+
+    public UserDto toDto(User user, boolean isPrivate) {
         if(!Hibernate.isInitialized(user)) {
-            return new UserDto(user.getId(), null);
+            return new UserDto(user.getId(), null, null, null, null, null, true, true);
         }
-        return new UserDto(user.getId(), user.getRating());
+        return new UserDto(user.getId(), user.getRating(), user.getUsername(),
+                user.isNameProtected() && !isPrivate ? null : user.getFullName(),
+                user.isSocialProtected() && !isPrivate ? null : user.getDiscordId(),
+                user.isSocialProtected() && !isPrivate ? null : user.getSocialUsername(),
+                user.isNameProtected(), user.isSocialProtected());
     }
 
     @AllArgsConstructor
