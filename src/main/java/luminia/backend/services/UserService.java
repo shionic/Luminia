@@ -9,6 +9,9 @@ import luminia.backend.dto.UserDto;
 import luminia.backend.models.User;
 import luminia.backend.repositories.UserRepository;
 import org.hibernate.Hibernate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -30,6 +33,22 @@ public class UserService {
         return userRepository.getReferenceById(aLong);
     }
 
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public Page<User> findByNameLike(String search, Pageable pageable, boolean isPrivate) {
+        if(!isPrivate) {
+            return userRepository.findByNameLikeWithPrivacy(search, pageable);
+        } else {
+            return userRepository.findByNameLike(search, pageable);
+        }
+    }
+
     /**
      * Return the user. Only for debug
      * @return Debug user
@@ -41,6 +60,15 @@ public class UserService {
         }
         Jwt jwt = (Jwt) authentication.getPrincipal();
         return new CurrentUser(jwt.getClaim("userId"), authentication.getName(), jwt.getClaimAsStringList("roles"));
+    }
+
+    public User create(CurrentUser currentUser) {
+        User user = new User();
+        user.setRating(0.0);
+        user.setUsername(String.format("uid%d", currentUser.getId()));
+        user.setNameProtected(true);
+        user.setSocialProtected(true);
+        return userRepository.save(user);
     }
 
     public UserDto toDto(User user) {
@@ -70,6 +98,11 @@ public class UserService {
         @JsonIgnore
         public User getEntity() {
             return userRepository.getReferenceById(id);
+        }
+
+        @JsonIgnore
+        public boolean hasRole(String role) {
+            return roles.contains(role);
         }
     }
 }

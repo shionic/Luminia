@@ -24,10 +24,13 @@ public class Task {
     private Long id;
     @Column(name = "display_name", unique = true)
     private String displayName;
+    private String description;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
     private List<Long> attachments;
+    @Column(name = "private_attachments")
+    private List<Long> privateAttachments;
     private TaskType task;
 
     public enum TaskType {

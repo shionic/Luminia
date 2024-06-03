@@ -36,14 +36,14 @@ public class AttachmentService {
     }
 
     public Attachment create(User user, String fileName, String contentType, byte[] bytes) {
+        var ext = StringUtils.getExtension(fileName).orElse("");
         Attachment attachment = new Attachment();
         attachment.setFileName(fileName);
-        attachment.setPath(StringUtils.generateRandomString(16));
+        attachment.setPath(StringUtils.generateRandomString(16)+"."+ext);
         attachment.setUser(user);
         attachment.setSize(bytes.length);
         attachment.setUploadDate(LocalDateTime.now());
-        var ext = StringUtils.getExtension(fileName).orElse("");
-        s3Service.upload(attachment.getPath()+ext, contentType, bytes);
+        s3Service.upload(attachment.getPath(), contentType, bytes);
         return repository.save(attachment);
     }
 

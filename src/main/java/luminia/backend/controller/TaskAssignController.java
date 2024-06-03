@@ -56,7 +56,7 @@ public class TaskAssignController {
         if(e.isEmpty()) {
             throw new NotFoundException("TaskAssign not found");
         }
-        return taskAssignService.toDto(e.get(), true);
+        return taskAssignService.toDto(e.get(), true, usr.hasRole("TEACHER") || usr.hasRole("ADMIN"));
     }
 
     @GetMapping("/by/id/{id}/result")
@@ -104,7 +104,7 @@ public class TaskAssignController {
                 throw new IllegalArgumentException("Task not assigned to target user");
             }
         }
-        //List<Attachment> attachments = attachmentService.findAllById(request.attachments);
+        verifyAttachments(request.attachments(), usr.getId());
         TaskResult result = new TaskResult();
         result.setTaskAssign(assign.get());
         result.setAuthor(usr.getEntity());
@@ -114,6 +114,18 @@ public class TaskAssignController {
         result.setUploadDate(LocalDateTime.now());
         result = taskResultService.save(result);
         return taskResultService.toDto(result, false);
+    }
+
+    private void verifyAttachments(List<Long> userAttachments, Long userId) {
+        List<Attachment> attachments = attachmentService.findAllById(userAttachments);
+        if(attachments.size() != userAttachments.size()) {
+            throw new IllegalArgumentException("Not all attachments found");
+        }
+        for(var a : attachments) {
+            if(!a.getUser().getId().equals(userId)) {
+                throw new IllegalArgumentException(String.format("You are not owning attachment %d", a.getId()));
+            }
+        }
     }
 
     public record UploadTask(Long userId, List<Long> attachments) {

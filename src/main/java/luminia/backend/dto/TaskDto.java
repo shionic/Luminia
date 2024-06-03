@@ -16,8 +16,10 @@ import java.util.List;
 public class TaskDto {
     private Long id;
     private String displayName;
+    private String description;
     private CourseDto course;
     private List<AttachmentDto> attachments;
+    private List<AttachmentDto> privateAttachments;
     private Task.TaskType task;
     private TaskResult.TaskStatus status;
 }

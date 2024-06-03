@@ -51,11 +51,11 @@ public class TaskAssignService {
     }
 
     public TaskAssignDto toDto(TaskAssign t) {
-        return toDto(t, false);
+        return toDto(t, false, false);
     }
 
-    public TaskAssignDto toDto(TaskAssign t, boolean fetchAttachments) {
+    public TaskAssignDto toDto(TaskAssign t, boolean fetchAttachments, boolean isPrivate) {
         return new TaskAssignDto(t.getId(), t.getVariant(), t.getType(), t.getDeadlineDate(), t.getImportantDate(),
-                taskService.toDto(t.getTask(), fetchAttachments), userService.toDto(t.getTarget()));
+                taskService.toDto(t.getTask(), fetchAttachments, isPrivate), userService.toDto(t.getTarget()));
     }
 }

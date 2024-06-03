@@ -28,6 +28,20 @@ public class CourseService {
     private CourseAccessRepository courseAccessRepository;
 
     @Transactional
+    public CourseAccess create(String name, String description, User teacher) {
+        Course course = new Course();
+        course.setName(name);
+        course.setDescription(description);
+        course.setTeacher(teacher);
+        course = courseRepository.save(course);
+        CourseAccess access = new CourseAccess();
+        access.setCourse(course);
+        access.setStatus(CourseAccess.CourseAccessStatus.OWNING);
+        access.setUser(teacher);
+        return courseAccessRepository.save(access);
+    }
+
+    @Transactional
     public Optional<Course> findWithFetchAll(Long courseId) {
         return courseRepository.findWithFetchAll(courseId);
     }

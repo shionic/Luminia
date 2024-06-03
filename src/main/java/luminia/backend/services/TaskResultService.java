@@ -53,7 +53,7 @@ public class TaskResultService {
         } else {
             attachmentDtoList = List.of();
         }
-        return new TaskResultDto(e.getId(), taskAssignService.toDto(e.getTaskAssign(), false), userService.toDto(e.getTarget()),
+        return new TaskResultDto(e.getId(), taskAssignService.toDto(e.getTaskAssign(), false, false), userService.toDto(e.getTarget()),
                 userService.toDto(e.getAuthor()), e.getStatus(), e.getRating(), attachmentDtoList, e.getUploadDate());
     }
 }
