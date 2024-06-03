@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import TasksView from '@/components/TasksView.vue';
 import type List from '@/services/remote/list';
+import type SelfUser from '@/services/remote/selfuser';
 import type TaskAssign from '@/services/remote/taskassign';
-import type User from '@/services/remote/user';
 import UserService from '@/services/user-service';
 import { ref, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
 var router = useRouter();
-var user : Ref<User|null> = ref(null);
+var user : Ref<SelfUser|null> = ref(null);
 UserService.current().then((u) => {
   if(u.isOk()) {
     user.value = u.data;
@@ -39,13 +39,13 @@ function go() {
 <template>
   <div class="welcome">
     <div class="hcenter welcome-section">
-      Добро пожаловать, <span class="welcome-active">{{ user?.fullName ?? user?.username }}</span>
+      Добро пожаловать, <span class="welcome-active">{{ user?.user.fullName ?? user?.user.username }}</span>
     </div>
     <div class="hcenter welcome-section">
       У вас <span class="welcome-active">{{ uncompleted }}</span> невыполненных заданий
     </div>
     <div v-if="uncompleted > 0" class="hcenter welcome-section">
-      <l-button type="black">Начать работу</l-button>
+      <l-button type="black" @click="go">Начать работу</l-button>
     </div>
   </div>
   <main>

@@ -22,12 +22,12 @@ CourseService.byId(props.id).then(t => {
             <span>Преподаватель:</span> <user-link :user="course?.teacher"></user-link>
         </div>
     </div>
-    <div>
+    <main>
         <TasksView header="Решение отклонено преподавателем" type="REJECTED" :course-id="props.id"></TasksView>
         <TasksView header="Начато" type="STARTED" :course-id="props.id"></TasksView>
         <TasksView header="Не начато" type="NOT_STARTED" :course-id="props.id"></TasksView>
         <TasksView header="Ожидает проверки преподавателем" :course-id="props.id" type="WAIT"></TasksView>
-    </div>
+    </main>
 </template>
 <style>
 .crs-name {

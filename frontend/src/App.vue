@@ -7,9 +7,10 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="header-wrapper">
       <div class="logo"><RouterLink to="/">Luminia</RouterLink></div>
       <nav>
-        <RouterLink to="/courses">Курсы</RouterLink>
-        <RouterLink to="/teachers">Преподаватели</RouterLink>
         <RouterLink to="/about">О проекте</RouterLink>
+        <RouterLink to="/courses">Курсы</RouterLink>
+        <RouterLink to="/users">Рейтинг учащихся</RouterLink>
+        <RouterLink to="/profile">Мой профиль</RouterLink>
       </nav>
     </div>
   </header>

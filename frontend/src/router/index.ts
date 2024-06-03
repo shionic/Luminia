@@ -16,6 +16,16 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
+      path: '/courses',
+      name: 'courses',
+      component: () => import('../views/CoursesView.vue')
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: () => import('../views/UsersView.vue')
+    },
+    {
       path: '/task/:id',
       name: 'task',
       component: () => import('../views/TaskView.vue'),
@@ -25,6 +35,12 @@ const router = createRouter({
       path: '/course/:id',
       name: 'course',
       component: () => import('../views/CourseView.vue'),
+      props: true
+    },
+    {
+      path: '/user/:id',
+      name: 'user',
+      component: () => import('../views/UserView.vue'),
       props: true
     },
     {
