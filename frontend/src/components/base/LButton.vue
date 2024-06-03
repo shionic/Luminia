@@ -14,10 +14,11 @@ const buttonClasses = "button button-"+props.type
 button {
     border: none;
     border-radius: 10px;
-    padding: 15px;
-    font-size: 16px;
+    padding: 15px 20px 15px;
+    font-size: 18px;
     cursor: pointer;
     transition: 0.2s;
+    font-weight: 500;
 }
 
 .button-primary {

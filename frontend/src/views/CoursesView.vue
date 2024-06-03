@@ -11,6 +11,11 @@ CourseService.byUser(0).then((r) => {
 });
 </script>
 <template>
+    <div class="welcome">
+        <div class="welcome-section hcenter">
+            <span class="welcome-header">Доступные курсы</span>
+        </div>
+    </div>
     <main>
         <course-card v-for="course in courses?.data?.list" :course="course"></course-card>
     </main>

@@ -13,7 +13,7 @@ CourseService.byId(props.id).then(t => {
 <template>
     <div class="welcome">
         <div class="hcenter welcome-section">
-            <span class="crs-name">{{ course?.name }}</span>
+            <span class="welcome-header">{{ course?.name }}</span>
         </div>
         <div class="hcenter welcome-section">
             <span class="crs-description">{{ course?.description }}</span>
@@ -30,10 +30,6 @@ CourseService.byId(props.id).then(t => {
     </main>
 </template>
 <style>
-.crs-name {
-    font-weight: bold;
-    font-size: 24px;
-}
 .crs-description {
     font-weight: bold;
 }

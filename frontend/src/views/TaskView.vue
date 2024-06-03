@@ -8,6 +8,7 @@ import AttachmentService from '@/services/attachment-service';
 import type Attachment from '@/services/remote/attachment';
 import type TaskResult from '@/services/remote/taskresult';
 import UserLink from '@/components/UserLink.vue';
+import UploadFile from '@/components/UploadFile.vue';
 // Task
 var props = defineProps((["id"]))
 var taskAssignId: number = +props.id;
@@ -51,12 +52,7 @@ TaskService.getResultById(taskAssignId, false).then(t => {
 })
 // Upload files
 var uploadFiles: Ref<Array<Attachment>> = ref([]);
-var uploadInput: Ref<HTMLInputElement | null> = ref(null);
-async function uploadFile() {
-    let files = uploadInput.value?.files;
-    let fileData = files?.[0] as any;
-    let fileName = files?.[0].name as string;
-    let attachment = (await AttachmentService.upload(fileData, fileName)).get();
+async function uploadedFile(attachment : Attachment) {
     uploadFiles.value.push(attachment);
     uploadMode.value = true
 }
@@ -66,9 +62,8 @@ async function uploadResult() {
 </script>
 <template>
     <div class="welcome">
-        <div class="tv-status">Срочно</div>
         <div class="hcenter welcome-section">
-            <span class="tv-name">{{ taskAssign?.data?.task.displayName }}</span>
+            <span class="welcome-header">{{ taskAssign?.data?.task.displayName }}</span>
         </div>
         <div class="hcenter welcome-section">
             <span class="tv-comment">Ваш вариант:</span> <span class="tv-description">{{ taskAssign?.data?.variant
@@ -80,19 +75,17 @@ async function uploadResult() {
     </div>
     <main>
         <p class="tv-help-text">
-            Внимательно прочитайте обучающие материалы в <b>левой половине</b> экрана, подготовленные вашим
+            Внимательно прочитайте обучающие материалы в <span class="text-accent">левой половине</span> экрана, подготовленные вашим
             преподавателем.
-            В <b>правой половине</b> находится задание, которое вам необходимо выполнить.<br />
-            После успешного выполнения задания сохраните отчет в формате <b>PDF</b> и загрузите его в поле ниже. Если
-            требуется загрузить дополнительные материалы упакуйте их в <b>ZIP</b> архив.<br />
-            Желаю удачи!
+            В <span class="text-accent">правой половине</span> находятся <span class="text-accent">загруженные вами</span> работы.<br />
+            После ответа преподавателя вы <span class="text-accent">пересдать</span> ваши работы
         </p>
         <div class="tv-container">
             <div class="tv-container-element">
                 <div v-if="taskAssign != null">
                     <div class="hcenter">
                         <div>
-                            <span>Материалы задачи</span>
+                            <span class="tv-instruct-text">Задание</span>
                         </div>
                     </div>
                     <FileView v-for="a in taskAssign?.data?.task.attachments"
@@ -101,7 +94,7 @@ async function uploadResult() {
                 <div v-if="oppTaskResult != null">
                     <div class="hcenter">
                         <div>
-                            <span>Материалы преподавателя</span>
+                            <span class="tv-instruct-text">Материалы преподавателя</span>
                         </div>
                     </div>
                     <FileView v-for="a in oppTaskResult?.data?.attachments"
@@ -111,7 +104,7 @@ async function uploadResult() {
             <div class="tv-container-element">
                 <div v-if="taskResult == null || !taskResult.isOk()" class="hcenter">
                     <div>
-                        <span>Решение 0</span>
+                        <span class="tv-instruct-text">Ваше решение</span>
                     </div>
                     <div>
                         <span class="card-comment">Вы еще не загрузили решение</span>
@@ -125,16 +118,14 @@ async function uploadResult() {
                         <span class="card-comment">{{ resultStatusText }}</span>
                     </div>
                 </div>
-                <FileView v-if="!uploadMode && taskResult?.isOk()" v-for="a in taskResult?.data?.attachments"
+                <div class="hcenter">
+                    <FileView v-if="!uploadMode && taskResult?.isOk()" v-for="a in taskResult?.data?.attachments"
                     v-bind:key="a.id" :attachment="a"></FileView>
                 <FileView v-for="a in uploadFiles" v-bind:key="a.id" :attachment="a"></FileView>
-                <div class="upload-container card">
-                    <div class="hcenter">
-                        <input ref="uploadInput" type="file" id="avatar" name="avatar" accept="*" /> <l-button
-                            type="primary" @click="uploadFile">Загрузить файл</l-button> <l-button
+                <upload-file @uploaded="uploadedFile"></upload-file>
+                <l-button
                             v-if="uploadFiles.length > 0" type="primary" @click="uploadResult">Загрузить
                             решение</l-button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -143,6 +134,9 @@ async function uploadResult() {
     </main>
 </template>
 <style>
+.tv-container-element > .hcenter + .hcenter {
+    margin-top: 20px;
+}
 .tv-welcome-link {
     color: var(--color-darker-gray);
 }
@@ -155,18 +149,18 @@ async function uploadResult() {
     color: var(--color-darker-gray);
 }
 
-.tv-name {
-    font-weight: bold;
-    font-size: 24px;
-}
-
 .tv-description {
-    font-weight: bold;
+    font-weight: 550;
+    color: var(--color-primary);
 }
 
 .tv-help-text {
     font-size: 18px;
     max-width: 100em;
+}
+
+.tv-instruct-text {
+    font-size: 20px;
 }
 
 .tv-container-element {
@@ -193,10 +187,6 @@ async function uploadResult() {
     /* TODO */
     display: flex;
     float: right;
-}
-
-.upload-container:hover {
-    background-color: inherit;
 }
 
 .card:hover .upload-comment {

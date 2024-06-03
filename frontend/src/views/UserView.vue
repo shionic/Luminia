@@ -10,5 +10,11 @@ UserService.byId(props.id).then(t => {
 })
 </script>
 <template>
-
+    <div class="welcome">
+        <div class="welcome-section hcenter">
+            <span class="welcome-header">{{ UserService.getName(user) }}</span>
+        </div>
+    </div>
+    <main>
+    </main>
 </template>

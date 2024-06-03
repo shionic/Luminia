@@ -35,10 +35,18 @@ async function loadPage() {
 }
 </script>
 <template>
-  <div v-if="tasks != null && tasks.length && tasks.length > 0">
-        <h2>{{ props.header }}</h2>
+  <div class="tasks-view" v-if="tasks != null && tasks.length && tasks.length > 0">
+        <h2 class="tasks-view-header">{{ props.header }}</h2>
         <task-card v-if="tasks != null" v-for="task in tasks" :task="task">
         </task-card>
         <l-button v-if="tasks.length < totalSize" type="secondary" @click="loadPage">Просмотреть ещё</l-button>
   </div>
-  </template>
+</template>
+<style>
+.tasks-view-header {
+  margin-top: 0px;
+}
+.tasks-view + .tasks-view {
+  margin-top: 30px;
+}
+</style>
