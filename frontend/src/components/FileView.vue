@@ -9,6 +9,7 @@ var props = defineProps({attachment: {
 }})
 var ext = props.attachment.fileName.substring(props.attachment.fileName.lastIndexOf('.'))
 var isBrowserViewable = ext == '.pdf';
+var isImage = [".png", ".jpg", ".jpeg"].includes(ext);
 var iframe = ref(null);
 var mydetails = ref(null);
 onMounted(() => {
@@ -27,7 +28,10 @@ async function downloadFile(url: string, fileName: string) {
         <div v-if="isBrowserViewable" class="fileview-content">
             <iframe ref="iframe" :src="$props.attachment.path" v-resize="{ }"></iframe>
         </div>
-        <div v-if="!isBrowserViewable" class="fileview-content">
+        <div v-if="isImage" class="fileview-content">
+            <img :src="$props.attachment.path">
+        </div>
+        <div v-if="!isImage && !isBrowserViewable" class="fileview-content">
             <LButton type="primary" @click="downloadFile($props.attachment.path, $props.attachment.fileName)">Скачать</LButton>
         </div>
     </details>

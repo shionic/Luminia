@@ -32,9 +32,20 @@ const router = createRouter({
       props: true
     },
     {
+      path: '/course/new',
+      name: 'courseNew',
+      component: () => import('../views/forms/CreateCourseForm.vue')
+    },
+    {
       path: '/course/:id',
       name: 'course',
       component: () => import('../views/CourseView.vue'),
+      props: true
+    },
+    {
+      path: '/course/:id/newtask',
+      name: 'taskNew',
+      component: () => import('../views/forms/CreateTaskForm.vue'),
       props: true
     },
     {
