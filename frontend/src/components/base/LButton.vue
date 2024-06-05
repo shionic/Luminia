@@ -11,7 +11,7 @@ const buttonClasses = "button button-"+props.type
     <button :class="buttonClasses" @click="$emit('click')"><slot></slot></button>
 </template>
 <style>
-button {
+.button {
     border: none;
     border-radius: 10px;
     padding: 15px 20px 15px;

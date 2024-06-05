@@ -3,6 +3,8 @@ import { onMounted, ref, type PropType } from 'vue';
 import Accordion from '../utils/animation.js'
 import Attachment from '@/services/remote/attachment.js';
 import LButton from './base/LButton.vue';
+import LIcon from './base/LIcon.vue';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 var props = defineProps({attachment: {
     type: Object as PropType<Attachment>,
     required: true
@@ -24,7 +26,12 @@ async function downloadFile(url: string, fileName: string) {
 </script>
 <template>
     <details ref="mydetails" class="fileview-details">
-        <summary>{{ $props.attachment.fileName }}</summary>
+        <summary>
+            <span class="fileview-filename">{{ $props.attachment.fileName }}</span>
+            <div class="fileview-actions">
+                <LIcon type="white" :icon="faDownload" @click="downloadFile($props.attachment.path, $props.attachment.fileName)"></LIcon>
+            </div>
+        </summary>
         <div v-if="isBrowserViewable" class="fileview-content">
             <iframe ref="iframe" :src="$props.attachment.path" v-resize="{ }"></iframe>
         </div>
@@ -40,12 +47,16 @@ async function downloadFile(url: string, fileName: string) {
 .fileview-details {
     transition: 0.4s;
 }
+.fileview-actions {
+    /* TODO */
+    display: flex;
+    float: right;
+}
 .fileview-details summary {
     background-color: var(--color-primary-background);
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
-    
 }
 .fileview-details iframe {
     width: calc(100% - 5px);

@@ -11,6 +11,9 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@types/iframe-resizer": "^3.5.13",
     "axios": "^1.6.3",
     "iframe-resizer": "^4.3.9",

@@ -48,7 +48,8 @@ async function uploadedPrivateAttachment(attachment: Attachment) {
                 <input v-model="name" type="text" placeholder="Название задачи">
             </div>
             <div class="form-field">
-                <input v-model="name" type="text" placeholder="Краткое описание задачи">
+                <textarea v-model="description" placeholder="Краткое описание задачи">
+                </textarea>
             </div>
             <div class="form-field">
                 <UploadFile @uploaded="uploadedAttachment"></UploadFile>

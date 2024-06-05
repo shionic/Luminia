@@ -39,7 +39,13 @@ function go() {
 <template>
   <div class="welcome">
     <div class="hcenter welcome-section">
-      Добро пожаловать, <span class="welcome-active">{{ user?.user.fullName ?? user?.user.username }}</span>
+      <span class="welcome-header">Добро пожаловать</span>
+    </div>
+    <div class="hcenter welcome-section">
+      {{ UserService.getName(user?.user) }}
+    </div>
+    <div class="hcenter welcome-section">
+      Ваш рейтинг 100, 1 место
     </div>
     <div class="hcenter welcome-section">
       У вас <span class="welcome-active">{{ uncompleted }}</span> невыполненных заданий

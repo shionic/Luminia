@@ -5,6 +5,7 @@ import type List from './list'
 export default class Task {
     public id: number
     public displayName: string
+    public description: string
     public attachments: Array<Attachment>
     public task: string
     public course: Course
@@ -13,6 +14,7 @@ export default class Task {
     constructor(
         id: number,
         displayName: string,
+        description: string,
         attachments: Array<Attachment>,
         task: string,
         course: Course,
@@ -20,6 +22,7 @@ export default class Task {
     ) {
         this.id = id
         this.displayName = displayName
+        this.description = description
         this.attachments = attachments
         this.task = task
         this.course = course

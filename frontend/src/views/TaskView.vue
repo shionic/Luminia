@@ -74,11 +74,14 @@ async function uploadResult() {
         </div>
     </div>
     <main>
+        <p v-if="taskAssign?.data?.task.description" class="tv-help-text">
+            {{ taskAssign?.data?.task.description }}
+        </p>
         <p class="tv-help-text">
             Внимательно прочитайте обучающие материалы в <span class="text-accent">левой половине</span> экрана, подготовленные вашим
             преподавателем.
-            В <span class="text-accent">правой половине</span> находятся <span class="text-accent">загруженные вами</span> работы.<br />
-            После ответа преподавателя вы <span class="text-accent">пересдать</span> ваши работы
+            В <span class="text-accent">правой половине</span> находится ваше решение. Выполните предоставленную работу и загрузите решение. Желаем вам успеха!<br />
+            После ответа преподавателя вы можете <span class="text-accent">исправить</span> свои ошибки и <span class="text-accent">пересдать</span> работу. В рейтинг засчитывается <span class="text-accent">последняя</span> сданая вами работа
         </p>
         <div class="tv-container">
             <div class="tv-container-element">
@@ -94,7 +97,7 @@ async function uploadResult() {
                 <div v-if="oppTaskResult != null">
                     <div class="hcenter">
                         <div>
-                            <span class="tv-instruct-text">Материалы преподавателя</span>
+                            <span class="tv-instruct-text">Ответ</span>
                         </div>
                     </div>
                     <FileView v-for="a in oppTaskResult?.data?.attachments"
@@ -119,9 +122,11 @@ async function uploadResult() {
                     </div>
                 </div>
                 <div class="hcenter">
-                    <FileView v-if="!uploadMode && taskResult?.isOk()" v-for="a in taskResult?.data?.attachments"
+                <FileView v-if="!uploadMode && taskResult?.isOk()" v-for="a in taskResult?.data?.attachments"
                     v-bind:key="a.id" :attachment="a"></FileView>
                 <FileView v-for="a in uploadFiles" v-bind:key="a.id" :attachment="a"></FileView>
+                </div>
+                <div class="hcenter">
                 <upload-file @uploaded="uploadedFile"></upload-file>
                 <l-button
                             v-if="uploadFiles.length > 0" type="primary" @click="uploadResult">Загрузить
@@ -168,13 +173,13 @@ async function uploadResult() {
     flex-direction: column;
     flex-basis: 100%;
     flex: 1;
-    border: var(--color-primary-background) solid 2px;
+    border: var(--color-primary-background) solid 3px;
     border-radius: 10px;
     padding: 10px;
 }
 
 .tv-container-element+.tv-container-element {
-    margin-left: 20px;
+    margin-left: 25px;
 }
 
 .tv-container {
