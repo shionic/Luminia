@@ -1,0 +1,115 @@
+@import './base.css';
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-white);
+    min-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+}
+
+body {
+    font-family: 'Raleway';
+}
+
+.logo {
+    color: var(--color-primary);
+    font-size: 24px;
+}
+
+.welcome {
+    background-color: var(--color-primary-background);
+    min-height: 40px;
+    color: var(--color-black);
+    padding: 25px;
+    font-size: 18px;
+}
+
+.welcome-section + .welcome-section {
+    margin-top: 12px;
+}
+
+.welcome-header {
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.hcenter {
+    justify-content: center;
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+a {
+    transition: 0.2s;
+    text-decoration: none;
+    color: var(--color-black);
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+nav a + a {
+    margin-left: 10px;
+}
+
+main {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 40px;
+}
+
+.card {
+    border: var(--color-primary) solid 5px;
+    border-radius: 15px;
+    padding: 20px 15px;
+    color: var(--color-black);
+    transition: 0.5s;
+}
+
+.fit-content {
+    width: fit-content;
+}
+
+.card + .card {
+    margin-top: 25px;
+}
+
+.card:hover {
+    color: var(--color-black);
+    background-color: var(--color-primary);
+}
+
+.card-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.card-comment {
+    color: var(--color-dark-gray);
+}
+
+.card:hover .card-comment {
+    color: var(--color-darker-gray);
+}
+
+.card-hcontainer {
+    display: flex;
+    align-items: center;
+}
+
+.card-statusbar {
+    display: flex;
+    float: right;
+}
+
+.text-accent {
+    color: var(--color-primary);
+    font-weight: 500;
+}
